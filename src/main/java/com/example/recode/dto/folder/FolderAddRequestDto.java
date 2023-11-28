@@ -22,12 +22,9 @@ public class FolderAddRequestDto {
     @NotBlank
     private String name;    // 폴더명
 
-    private LocalDateTime createDt; // 생성일시
-
     public Folder toEntity() {
         return Folder.builder()
                 .name(name)
-                .createDt(createDt)
                 .build();
     }
 
