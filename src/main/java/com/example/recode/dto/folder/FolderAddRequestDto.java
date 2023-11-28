@@ -1,11 +1,12 @@
 package com.example.recode.dto.folder;
 
+import com.example.recode.domain.Folder;
+import com.example.recode.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-
+import org.springframework.data.annotation.CreatedDate;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
@@ -21,7 +22,13 @@ public class FolderAddRequestDto {
     @NotBlank
     private String name;    // 폴더명
 
-    @CreationTimestamp
     private LocalDateTime createDt; // 생성일시
+
+    public Folder toEntity() {
+        return Folder.builder()
+                .name(name)
+                .createDt(createDt)
+                .build();
+    }
 
 }

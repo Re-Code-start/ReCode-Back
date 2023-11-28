@@ -5,6 +5,7 @@ import com.example.recode.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/folders")
 public class FolderController {
 
-    private FolderService folderService;
+    private final FolderService folderService;
 
     @PostMapping
-    public ResponseEntity add(FolderAddRequestDto dto) {
+    public ResponseEntity add(@RequestBody FolderAddRequestDto dto) {
         folderService.addFolder(dto);
         return ResponseEntity.ok("폴더 추가가 완료되었습니다.");
     }

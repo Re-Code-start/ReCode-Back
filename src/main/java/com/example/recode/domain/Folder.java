@@ -1,10 +1,14 @@
 package com.example.recode.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +23,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Folder {
 
     @Id
@@ -27,6 +32,7 @@ public class Folder {
 
     private String name;    // 폴더명
 
+    @CreatedDate
     private LocalDateTime createDt; // 생성일시
 
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
@@ -39,5 +45,12 @@ public class Folder {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "algorithm_id")
     private Algorithm algorithm;
+
+    @Builder
+    public Folder(String name, LocalDateTime createDt, User user) {
+        this.name = name;
+        this.createDt = createDt;
+        this.user = user;
+    }
 
 }
