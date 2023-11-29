@@ -26,7 +26,7 @@ public class FolderService {
     @Transactional
     public void addFolder(FolderAddRequestDto dto) {
         User user = userService.getUser(dto.getUserId());
-        Folder folder = dto.toEntity();
+        Folder folder = dto.toEntity(user);
         folderRepository.save(folder);
     }
 }

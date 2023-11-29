@@ -22,9 +22,10 @@ public class FolderAddRequestDto {
     @NotBlank
     private String name;    // 폴더명
 
-    public Folder toEntity() {
+    public Folder toEntity(User user) {
         return Folder.builder()
                 .name(name)
+                .user(user)
                 .build();
     }
 
