@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,7 @@ public class NoteService {
     public List<NoteListDto> getNoteList(Long folderId) {
         Folder folder = folderService.getFolder(folderId);
         List<Note> notes = noteRepository.findAllByFolder(folder);
+        notes.sort(Comparator.comparing(Note::getCreateDt).reversed());
         return notes.stream()
                 .map(note -> NoteListDto.builder()
                         .id(note.getId())
