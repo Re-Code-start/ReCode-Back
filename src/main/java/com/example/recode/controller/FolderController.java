@@ -5,6 +5,7 @@ import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,12 @@ public class FolderController {
     public ResponseEntity add(@RequestBody FolderAddRequestDto dto) {
         folderService.addFolder(dto);
         return ResponseEntity.ok("폴더 추가가 완료되었습니다.");
+    }
+
+    @DeleteMapping("/{folderId}")
+    public ResponseEntity delete(@PathVariable Long folderId){
+        folderService.deleteFolder(folderId);
+        return ResponseEntity.ok("폴더 삭제가 완료되었습니다.");
     }
 
 }
