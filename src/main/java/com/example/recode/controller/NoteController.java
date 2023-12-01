@@ -2,6 +2,7 @@ package com.example.recode.controller;
 
 import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.dto.note.NoteListDto;
+import com.example.recode.dto.note.NoteResponseDto;
 import com.example.recode.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ import java.util.List;
 public class NoteController {
 
     private final NoteService noteService;
+
+    @GetMapping("/{noteId}")
+    public NoteResponseDto get(@PathVariable Long noteId) {
+        return noteService.getNote(noteId);
+    }
 
     @GetMapping("/{folderId}")
     public List<NoteListDto> getList(@PathVariable Long folderId) {
