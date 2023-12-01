@@ -1,13 +1,18 @@
 package com.example.recode.controller;
 
 import com.example.recode.dto.folder.FolderAddRequestDto;
+import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class FolderController {
 
     private final FolderService folderService;
+
+    @GetMapping("/{userId}")
+    public List<FolderListDto> getList(@PathVariable String userId) {
+        return folderService.getFolderList(userId);
+    }
 
     @PostMapping
     public ResponseEntity add(@RequestBody FolderAddRequestDto dto) {
