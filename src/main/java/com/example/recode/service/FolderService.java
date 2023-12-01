@@ -44,4 +44,9 @@ public class FolderService {
         Folder folder = dto.toEntity(user);
         folderRepository.save(folder);
     }
+
+    @Transactional
+    public void deleteFolder(Long folderId) {
+        folderRepository.delete(getFolder(folderId));
+    }
 }
