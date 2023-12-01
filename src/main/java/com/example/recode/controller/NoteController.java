@@ -28,7 +28,7 @@ public class NoteController {
         return noteService.getNote(noteId);
     }
 
-    @GetMapping("/{folderId}")
+    @GetMapping("/list/{folderId}")
     public List<NoteListDto> getList(@PathVariable Long folderId) {
         return noteService.getNoteList(folderId);
     }

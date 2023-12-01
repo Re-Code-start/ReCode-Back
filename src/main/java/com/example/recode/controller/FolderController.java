@@ -23,7 +23,7 @@ public class FolderController {
 
     private final FolderService folderService;
 
-    @GetMapping("/{userId}")
+    @GetMapping("/list/{userId}")
     public List<FolderListDto> getList(@PathVariable String userId) {
         return folderService.getFolderList(userId);
     }
