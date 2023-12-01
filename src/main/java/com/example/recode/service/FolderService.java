@@ -46,6 +46,12 @@ public class FolderService {
     }
 
     @Transactional
+    public void updateFolderName(Long folderId, String folderName) {
+        Folder folder = getFolder(folderId);
+        folder.updateFolderName(folderName);
+    }
+
+    @Transactional
     public void deleteFolder(Long folderId) {
         folderRepository.delete(getFolder(folderId));
     }

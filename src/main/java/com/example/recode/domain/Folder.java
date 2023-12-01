@@ -53,4 +53,7 @@ public class Folder {
         this.user = user;
     }
 
+    public void updateFolderName(String folderName) {
+        this.name = folderName;
+    }
 }
