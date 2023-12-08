@@ -59,6 +59,14 @@ public class NoteService {
     }
 
     @Transactional
+    public void updateNoteTitle(Long noteId, String noteTitle) {
+        Note note = noteRepository.findById(noteId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));
+
+        note.updateTitle(noteTitle);
+    }
+
+    @Transactional
     public void updateNote(Long notedId, NoteUpdateRequestDto dto) {
         Note note = noteRepository.findById(notedId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));

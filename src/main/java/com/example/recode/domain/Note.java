@@ -58,6 +58,10 @@ public class Note {
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
     public void updateNewCode(String newCode) {
         this.newCode = newCode;
     }
