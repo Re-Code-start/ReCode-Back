@@ -3,6 +3,7 @@ package com.example.recode.controller;
 import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
+import com.example.recode.dto.note.NoteUpdateRequestDto;
 import com.example.recode.service.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +39,12 @@ public class NoteController {
     public ResponseEntity add(@RequestBody NoteAddRequestDto dto) {
         noteService.addNote(dto);
         return ResponseEntity.ok("오답노트가 추가되었습니다.");
+    }
+
+    @PutMapping("/{notedId}")
+    public ResponseEntity update(@PathVariable Long notedId, @RequestBody NoteUpdateRequestDto dto) {
+        noteService.updateNote(notedId, dto);
+        return ResponseEntity.ok("오답노트 수정이 완료되었습니다.");
     }
 
     @DeleteMapping("/{noteId}")
