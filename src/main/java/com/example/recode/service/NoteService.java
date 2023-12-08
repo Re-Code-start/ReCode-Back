@@ -5,6 +5,7 @@ import com.example.recode.domain.Note;
 import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
+import com.example.recode.dto.note.NoteUpdateRequestDto;
 import com.example.recode.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,15 @@ public class NoteService {
         Folder folder = folderService.getFolder(dto.getFolderId());
         Note note = dto.toEntity(folder);
         noteRepository.save(note);
+    }
+
+    @Transactional
+    public void updateNote(Long notedId, NoteUpdateRequestDto dto) {
+        Note note = noteRepository.findById(notedId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));
+
+        note.updateNewCode(dto.getNewCode());
+        note.updateImprovement(dto.getImprovement());
     }
 
     @Transactional

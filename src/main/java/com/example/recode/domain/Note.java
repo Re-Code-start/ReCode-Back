@@ -58,6 +58,14 @@ public class Note {
     @JoinColumn(name = "folder_id")
     private Folder folder;
 
+    public void updateNewCode(String newCode) {
+        this.newCode = newCode;
+    }
+
+    public void updateImprovement(String improvement) {
+        this.improvement = improvement;
+    }
+
     @Builder
     public Note(String title, String link, FeedbackType type, String oldCode, String newCode, String improvement, String comment, Folder folder) {
         this.title = title;
