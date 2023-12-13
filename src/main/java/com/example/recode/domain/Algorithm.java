@@ -27,13 +27,11 @@ public class Algorithm {
     private String name;    // 알고리즘명
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
-    @OneToMany(mappedBy = "algorithm", cascade = CascadeType.ALL)
-    private List<Folder> folders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "algorithm", cascade = CascadeType.ALL)
-    private List<Answer> answers = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "note_id")
+    private Note note;
 
 }

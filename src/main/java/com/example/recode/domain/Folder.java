@@ -38,13 +38,12 @@ public class Folder {
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
     private List<Note> notes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+    private List<Algorithm> algorithms = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "algorithm_id")
-    private Algorithm algorithm;
 
     @Builder
     public Folder(String name, LocalDateTime createDt, User user) {

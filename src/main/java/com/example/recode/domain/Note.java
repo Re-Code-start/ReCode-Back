@@ -54,6 +54,9 @@ public class Note {
     @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
+    private List<Algorithm> algorithms = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private Folder folder;
