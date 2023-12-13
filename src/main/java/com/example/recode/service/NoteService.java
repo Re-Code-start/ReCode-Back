@@ -6,6 +6,7 @@ import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
 import com.example.recode.dto.note.NoteUpdateRequestDto;
+import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class NoteService {
 
     private final NoteRepository noteRepository;
-    private final FolderService folderService;
+    private final FolderRepository folderRepository;
 
     public NoteResponseDto getNote(Long noteId) {
         Note note = noteRepository.findById(noteId)
@@ -40,7 +41,8 @@ public class NoteService {
 
     @Transactional(readOnly = true)
     public List<NoteListDto> getNoteList(Long folderId) {
-        Folder folder = folderService.getFolder(folderId);
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
         List<Note> notes = noteRepository.findAllByFolder(folder);
         notes.sort(Comparator.comparing(Note::getCreateDt).reversed());
         return notes.stream()
@@ -53,7 +55,8 @@ public class NoteService {
 
     @Transactional
     public void addNote(NoteAddRequestDto dto) {
-        Folder folder = folderService.getFolder(dto.getFolderId());
+        Folder folder = folderRepository.findById(dto.getFolderId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
         Note note = dto.toEntity(folder);
         noteRepository.save(note);
     }
