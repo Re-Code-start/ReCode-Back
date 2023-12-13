@@ -70,8 +70,8 @@ public class NoteService {
     }
 
     @Transactional
-    public void updateNote(Long notedId, NoteUpdateRequestDto dto) {
-        Note note = noteRepository.findById(notedId)
+    public void updateNote(Long noteId, NoteUpdateRequestDto dto) {
+        Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));
 
         note.updateNewCode(dto.getNewCode());

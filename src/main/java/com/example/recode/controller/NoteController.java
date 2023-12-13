@@ -47,9 +47,9 @@ public class NoteController {
         return ResponseEntity.ok("오답노트 제목 수정이 완료되었습니다.");
     }
 
-    @PutMapping("/{notedId}")
-    public ResponseEntity update(@PathVariable Long notedId, @RequestBody NoteUpdateRequestDto dto) {
-        noteService.updateNote(notedId, dto);
+    @PutMapping("/{noteId}")
+    public ResponseEntity update(@PathVariable Long noteId, @RequestBody NoteUpdateRequestDto dto) {
+        noteService.updateNote(noteId, dto);
         return ResponseEntity.ok("오답노트 수정이 완료되었습니다.");
     }
 
