@@ -1,5 +1,6 @@
 package com.example.recode.service;
 
+import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Note;
 import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
@@ -44,6 +45,15 @@ public class AlgorithmService {
         algorithmRepository.save(dto.toEntity(folder, note));
 
         return getAlgorithmList(dto.getFolderId());
+    }
+
+    public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
+        Algorithm algorithm = algorithmRepository.findById(algorithmId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+
+        algorithm.updateName(algorithmName);
+
+        return getAlgorithmList(algorithm.getFolder().getId());
     }
 
 }

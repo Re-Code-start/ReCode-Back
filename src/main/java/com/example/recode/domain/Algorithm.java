@@ -35,6 +35,10 @@ public class Algorithm {
     @JoinColumn(name = "note_id")
     private Note note;
 
+    public void updateName(String algorithmName) {
+        this.name = algorithmName;
+    }
+
     @Builder
     public Algorithm(String name, Folder folder, Note note) {
         this.name = name;
