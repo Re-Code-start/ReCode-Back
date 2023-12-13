@@ -56,4 +56,13 @@ public class AlgorithmService {
         return getAlgorithmList(algorithm.getFolder().getId());
     }
 
+    public List<AlgorithmListDto> deleteAlgorithm(Long algorithmId) {
+        Algorithm algorithm = algorithmRepository.findById(algorithmId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+
+        algorithmRepository.delete(algorithm);
+
+        return getAlgorithmList(algorithm.getFolder().getId());
+    }
+
 }
