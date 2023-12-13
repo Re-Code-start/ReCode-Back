@@ -1,5 +1,6 @@
 package com.example.recode.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,5 +34,12 @@ public class Algorithm {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "note_id")
     private Note note;
+
+    @Builder
+    public Algorithm(String name, Folder folder, Note note) {
+        this.name = name;
+        this.folder = folder;
+        this.note = note;
+    }
 
 }

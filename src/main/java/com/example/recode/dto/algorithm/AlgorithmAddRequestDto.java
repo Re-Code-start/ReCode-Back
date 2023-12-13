@@ -20,4 +20,12 @@ public class AlgorithmAddRequestDto {
 
     private String algorithmName;
 
+    public Algorithm toEntity(Folder folder, Note note) {
+        return Algorithm.builder()
+                .name(algorithmName)
+                .folder(folder)
+                .note(note)
+                .build();
+    }
+
 }
