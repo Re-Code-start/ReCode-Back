@@ -1,7 +1,7 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Folder;
-import com.example.recode.domain.User;
+import com.example.recode.domain.Users;
 import com.example.recode.dto.folder.FolderAddRequestDto;
 import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.repository.FolderRepository;
@@ -28,7 +28,7 @@ public class FolderService {
 
     @Transactional(readOnly = true)
     public List<FolderListDto> getFolderList(String userId) {
-        User user = userService.getUser(userId);
+        Users user = userService.getUser(userId);
         List<Folder> folders = folderRepository.findAllByUser(user);
         return folders.stream()
                 .map(folder -> FolderListDto.builder()
@@ -40,7 +40,7 @@ public class FolderService {
 
     @Transactional
     public void addFolder(FolderAddRequestDto dto) {
-        User user = userService.getUser(dto.getUserId());
+        Users user = userService.getUser(dto.getUserId());
         Folder folder = dto.toEntity(user);
         folderRepository.save(folder);
     }

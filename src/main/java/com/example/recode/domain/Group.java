@@ -38,7 +38,7 @@ public class Group {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "groupLeader_id")
-    private User groupLeader;
+    private Users groupLeader;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<User_Group> user_groups = new ArrayList<>();

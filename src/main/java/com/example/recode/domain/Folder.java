@@ -40,14 +40,14 @@ public class Folder {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "algorithm_id")
     private Algorithm algorithm;
 
     @Builder
-    public Folder(String name, LocalDateTime createDt, User user) {
+    public Folder(String name, LocalDateTime createDt, Users user) {
         this.name = name;
         this.createDt = createDt;
         this.user = user;

@@ -28,7 +28,7 @@ public class Algorithm {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
     @OneToMany(mappedBy = "algorithm", cascade = CascadeType.ALL)
     private List<Folder> folders = new ArrayList<>();
