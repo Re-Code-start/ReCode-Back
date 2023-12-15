@@ -54,4 +54,9 @@ public class UserServiceImpl implements UserService{
         return jwtTokenProvider.createToken(user.getNickname(), user.getMembershipLevel());
     }
 
+    @Override
+    public Users getUser(String userId) {
+        return null;
+    }
+
 }
