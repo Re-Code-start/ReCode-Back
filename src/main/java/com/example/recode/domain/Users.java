@@ -4,16 +4,26 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import lombok.Getter;
+import lombok.Setter;
 
-@Builder
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Getter
-@NoArgsConstructor
-public class User {
+@Builder
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,16 +33,15 @@ public class User {
 
     private String nickname;    // 닉네임
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private MembershipLevel membershipLevel = MembershipLevel.BASIC;    // 멤버쉽 등급
-
     private String imageUrl;    // 프로필이미지URL
 
     @ColumnDefault("0")
     private int heart;          // 받은 하트 수
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private MembershipLevel membershipLevel;
 
     @OneToMany(mappedBy = "groupLeader", cascade = CascadeType.ALL)
     private List<Group> groups = new ArrayList<>();

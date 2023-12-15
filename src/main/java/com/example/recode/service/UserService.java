@@ -6,4 +6,6 @@ public interface UserService {
     boolean nicknameCheck(String nickname);
 
     boolean join(UserDto request);
+
+    String login(String username, String password);
 }
