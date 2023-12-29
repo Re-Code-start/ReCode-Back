@@ -21,7 +21,6 @@ public class AlgorithmService {
 
     private final AlgorithmRepository algorithmRepository;
     private final FolderRepository folderRepository;
-    private final NoteRepository noteRepository;
 
     public List<AlgorithmListDto> getAlgorithmList(Long folderId) {
         Folder folder = folderRepository.findById(folderId)
@@ -35,14 +34,12 @@ public class AlgorithmService {
                 .collect(Collectors.toList());
     }
 
-    public List<AlgorithmListDto> addAlgorithm(AlgorithmAddRequestDto dto) {
+    public List<AlgorithmListDto> addFolderAlgorithm(AlgorithmAddRequestDto dto) {
+
         Folder folder = folderRepository.findById(dto.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
 
-        Note note = noteRepository.findById(dto.getNoteId())
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));
-
-        algorithmRepository.save(dto.toEntity(folder, note));
+        algorithmRepository.save(dto.toEntity(folder));
 
         return getAlgorithmList(dto.getFolderId());
     }

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,15 +18,13 @@ public class AlgorithmAddRequestDto {
 
     private Long folderId;
 
-    private Long noteId;
-
+    @NotBlank
     private String algorithmName;
 
-    public Algorithm toEntity(Folder folder, Note note) {
+    public Algorithm toEntity(Folder folder) {
         return Algorithm.builder()
                 .name(algorithmName)
                 .folder(folder)
-                .note(note)
                 .build();
     }
 

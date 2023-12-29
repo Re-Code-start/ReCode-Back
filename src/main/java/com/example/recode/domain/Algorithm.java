@@ -40,10 +40,9 @@ public class Algorithm {
     }
 
     @Builder
-    public Algorithm(String name, Folder folder, Note note) {
+    public Algorithm(String name, Folder folder) {
         this.name = name;
         this.folder = folder;
-        this.note = note;
     }
 
 }

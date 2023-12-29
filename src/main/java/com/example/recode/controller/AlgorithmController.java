@@ -30,7 +30,7 @@ public class AlgorithmController {
 
     @PostMapping
     public List<AlgorithmListDto> add(@RequestBody AlgorithmAddRequestDto dto) {
-        return algorithmService.addAlgorithm(dto);
+        return algorithmService.addFolderAlgorithm(dto);
     }
 
     @PutMapping("/{algorithmId}/{algorithmName}")
