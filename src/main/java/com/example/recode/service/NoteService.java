@@ -23,6 +23,7 @@ public class NoteService {
 
     private final NoteRepository noteRepository;
     private final FolderRepository folderRepository;
+    private final AlgorithmService algorithmService;
 
     public NoteResponseDto getNote(Long noteId) {
         Note note = noteRepository.findById(noteId)
@@ -58,7 +59,9 @@ public class NoteService {
         Folder folder = folderRepository.findById(dto.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
         Note note = dto.toEntity(folder);
-        noteRepository.save(note);
+        note = noteRepository.save(note);
+
+        algorithmService.addNoteAlgorithm(dto.getAlgorithmNameList(), note);
     }
 
     @Transactional

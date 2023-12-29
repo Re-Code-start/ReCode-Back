@@ -45,4 +45,9 @@ public class Algorithm {
         this.folder = folder;
     }
 
+    public Algorithm(String name, Note note) {
+        this.name = name;
+        this.note = note;
+    }
+
 }

@@ -44,6 +44,12 @@ public class AlgorithmService {
         return getAlgorithmList(dto.getFolderId());
     }
 
+    public void addNoteAlgorithm(List<String> nameList, Note note) {
+        for (String name:nameList) {
+            algorithmRepository.save(new Algorithm(name, note));
+        }
+    }
+
     public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
         Algorithm algorithm = algorithmRepository.findById(algorithmId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
