@@ -7,13 +7,16 @@ import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
 import com.example.recode.dto.note.NoteUpdateRequestDto;
+import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +27,7 @@ public class NoteService {
 
     private final NoteRepository noteRepository;
     private final FolderRepository folderRepository;
+    private final AlgorithmRepository algorithmRepository;
     private final AlgorithmService algorithmService;
 
     public NoteResponseDto getNote(Long noteId) {
@@ -84,6 +88,9 @@ public class NoteService {
         }
         if (dto.getImprovement() != null) {
             note.updateImprovement(dto.getImprovement());
+        }
+        if (dto.getAlgorithmIds() != null) {
+            algorithmService.updateNoteAlgorithm(dto.getAlgorithmIds(), note);
         }
     }
 

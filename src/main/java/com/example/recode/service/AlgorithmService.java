@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,4 +71,33 @@ public class AlgorithmService {
         return getAlgorithmList(algorithm.getFolder().getId());
     }
 
+    public void updateNoteAlgorithm(List<Long> algorithmIds, Note note) {
+        Set<Algorithm> oldAlgorithms = new HashSet<>(note.getAlgorithms());
+        Set<Algorithm> newAlgorithms = new HashSet<>();
+
+        for (Long algorithmId : algorithmIds) {
+            Algorithm algorithm = algorithmRepository.findById(algorithmId)
+                    .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+            newAlgorithms.add(algorithm);
+        }
+
+        List<Algorithm> algorithmsToRemove = new ArrayList<>();
+        List<String> algorithmNamesToAdd = new ArrayList<>();
+
+        // 옛 리스트에만 있는 것 -> 삭제
+        for (Algorithm algorithm : oldAlgorithms) {
+            if (!newAlgorithms.contains(algorithm)) {
+                algorithmsToRemove.add(algorithm);
+            }
+        }
+        algorithmRepository.deleteAll(algorithmsToRemove);
+
+        // 새 리스트에만 있는 것 -> 추가
+        for (Algorithm algorithm : newAlgorithms) {
+            if (!oldAlgorithms.contains(algorithm)) {
+                algorithmNamesToAdd.add(algorithm.getName());
+            }
+        }
+        addNoteAlgorithm(algorithmNamesToAdd, note);
+    }
 }
