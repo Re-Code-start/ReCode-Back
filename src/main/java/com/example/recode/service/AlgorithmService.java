@@ -54,7 +54,7 @@ public class AlgorithmService {
 
     public void addNoteAlgorithm(List<String> nameList, Note note) {
         for (String name:nameList) {
-            algorithmRepository.save(new Algorithm(name, note));
+            algorithmRepository.save(Algorithm.builder().name(name).note(note).build());
         }
     }
 

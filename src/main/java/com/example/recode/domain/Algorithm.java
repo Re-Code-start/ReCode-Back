@@ -1,5 +1,6 @@
 package com.example.recode.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Algorithm {
 
     @Id
@@ -37,17 +40,6 @@ public class Algorithm {
 
     public void updateName(String algorithmName) {
         this.name = algorithmName;
-    }
-
-    @Builder
-    public Algorithm(String name, Folder folder) {
-        this.name = name;
-        this.folder = folder;
-    }
-
-    public Algorithm(String name, Note note) {
-        this.name = name;
-        this.note = note;
     }
 
 }
