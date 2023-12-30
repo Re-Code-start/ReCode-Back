@@ -79,8 +79,12 @@ public class NoteService {
         Note note = noteRepository.findById(noteId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 노트입니다."));
 
-        note.updateNewCode(dto.getNewCode());
-        note.updateImprovement(dto.getImprovement());
+        if (dto.getNewCode() != null) {
+            note.updateNewCode(dto.getNewCode());
+        }
+        if (dto.getImprovement() != null) {
+            note.updateImprovement(dto.getImprovement());
+        }
     }
 
     @Transactional
