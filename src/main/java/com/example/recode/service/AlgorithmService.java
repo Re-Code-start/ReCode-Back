@@ -25,6 +25,11 @@ public class AlgorithmService {
     private final AlgorithmRepository algorithmRepository;
     private final FolderRepository folderRepository;
 
+    public Algorithm getAlgorithm(Long algorithmId) {
+        return algorithmRepository.findById(algorithmId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+    }
+
     public List<AlgorithmListDto> getAlgorithmList(Long folderId) {
         Folder folder = folderRepository.findById(folderId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
@@ -54,17 +59,13 @@ public class AlgorithmService {
     }
 
     public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
-        Algorithm algorithm = algorithmRepository.findById(algorithmId)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
-
-        algorithm.updateName(algorithmName);
-
+        Algorithm algorithm = getAlgorithm(algorithmId);
+        getAlgorithm(algorithmId).updateName(algorithmName);
         return getAlgorithmList(algorithm.getFolder().getId());
     }
 
     public List<AlgorithmListDto> deleteAlgorithm(Long algorithmId) {
-        Algorithm algorithm = algorithmRepository.findById(algorithmId)
-                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+        Algorithm algorithm = getAlgorithm(algorithmId);
 
         algorithmRepository.delete(algorithm);
 
@@ -76,8 +77,7 @@ public class AlgorithmService {
         Set<Algorithm> newAlgorithms = new HashSet<>();
 
         for (Long algorithmId : algorithmIds) {
-            Algorithm algorithm = algorithmRepository.findById(algorithmId)
-                    .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
+            Algorithm algorithm = getAlgorithm(algorithmId);
             newAlgorithms.add(algorithm);
         }
 
