@@ -1,5 +1,6 @@
 package com.example.recode.service;
 
+import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Note;
 import com.example.recode.dto.note.NoteAddRequestDto;
@@ -37,6 +38,7 @@ public class NoteService {
                 .newCode(note.getNewCode())
                 .improvement(note.getImprovement())
                 .comment(note.getComment())
+                .algorithmList(note.getAlgorithms().stream().map(Algorithm::getName).collect(Collectors.toList()))
                 .build();
     }
 
