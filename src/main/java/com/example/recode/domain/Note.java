@@ -1,10 +1,15 @@
 package com.example.recode.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -21,7 +26,10 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Note {
 
     @Id
@@ -43,13 +51,29 @@ public class Note {
 
     private String comment;         // 문제 접근법
 
+    @CreatedDate
     private LocalDateTime createDt; // 생성 일시
 
     @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
+    private List<Algorithm> algorithms = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private Folder folder;
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateNewCode(String newCode) {
+        this.newCode = newCode;
+    }
+
+    public void updateImprovement(String improvement) {
+        this.improvement = improvement;
+    }
 
 }
