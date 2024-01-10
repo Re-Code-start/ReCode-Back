@@ -27,14 +27,6 @@ public class UserController {
         return ResponseEntity.ok(userService.join(user));
     }
 
-/*    @PostMapping("/login")
-    public ResponseEntity<JwtToken> login(@RequestBody Map<String, String> loginForm) {
-        JwtToken token = userService.login(loginForm.get("nickname"), loginForm.get("password"));
-        return ResponseEntity.ok(token);
-    }
-
- */
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
         System.out.println("test");
