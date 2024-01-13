@@ -1,5 +1,7 @@
 package com.example.recode.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +19,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Algorithm {
 
     @Id
@@ -27,13 +31,16 @@ public class Algorithm {
     private String name;    // 알고리즘명
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Users user;
 
-    @OneToMany(mappedBy = "algorithm", cascade = CascadeType.ALL)
-    private List<Folder> folders = new ArrayList<>();
+    @JoinColumn(name = "folder_id")
+    private Folder folder;
 
-    @OneToMany(mappedBy = "algorithm", cascade = CascadeType.ALL)
-    private List<Answer> answers = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "note_id")
+    private Note note;
+
+    public void updateName(String algorithmName) {
+        this.name = algorithmName;
+    }
 
 }

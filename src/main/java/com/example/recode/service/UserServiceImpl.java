@@ -35,8 +35,9 @@ public class UserServiceImpl implements UserService{
         reqDto.setPassword(passwordEncoder.encode(reqDto.getPassword()));
 
         Users user = reqDto.toEntity();
+      
         try{
-            userRepository.save(user);
+            userRepository.save(users);
             return true;
         }catch(Exception e){
             throw new RuntimeException("회원 가입 중 에러가 발생하였습니다.", e);
