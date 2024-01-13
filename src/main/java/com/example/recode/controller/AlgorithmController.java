@@ -29,6 +29,11 @@ public class AlgorithmController {
         return algorithmService.getFolderAlgorithmList(folderId);
     }
 
+    @GetMapping("/list")
+    public List<AlgorithmListDto> getList(@RequestParam Long groupId, @RequestParam Long userId) {
+        return algorithmService.getGroupRoomAlgorithmList(groupId, userId);
+    }
+
     @PostMapping
     public List<AlgorithmListDto> add(@RequestBody AlgorithmAddRequestDto dto) {
         return algorithmService.addFolderAlgorithm(dto);
