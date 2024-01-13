@@ -30,7 +30,7 @@ public class AlgorithmService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 알고리즘입니다."));
     }
 
-    public List<AlgorithmListDto> getAlgorithmList(Long folderId) {
+    public List<AlgorithmListDto> getFolderAlgorithmList(Long folderId) {
         Folder folder = folderRepository.findById(folderId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
 
@@ -49,7 +49,7 @@ public class AlgorithmService {
 
         algorithmRepository.save(dto.toEntity(folder));
 
-        return getAlgorithmList(dto.getFolderId());
+        return getFolderAlgorithmList(dto.getFolderId());
     }
 
     public void addNoteAlgorithm(List<String> nameList, Note note) {
@@ -61,7 +61,7 @@ public class AlgorithmService {
     public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
         Algorithm algorithm = getAlgorithm(algorithmId);
         getAlgorithm(algorithmId).updateName(algorithmName);
-        return getAlgorithmList(algorithm.getFolder().getId());
+        return getFolderAlgorithmList(algorithm.getFolder().getId());
     }
 
     public List<AlgorithmListDto> deleteAlgorithm(Long algorithmId) {
@@ -69,7 +69,7 @@ public class AlgorithmService {
 
         algorithmRepository.delete(algorithm);
 
-        return getAlgorithmList(algorithm.getFolder().getId());
+        return getFolderAlgorithmList(algorithm.getFolder().getId());
     }
 
     public void updateNoteAlgorithm(List<Long> algorithmIds, Note note) {

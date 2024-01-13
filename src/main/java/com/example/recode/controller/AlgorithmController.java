@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class AlgorithmController {
 
     private final AlgorithmService algorithmService;
 
-    @GetMapping("/list/{folderId}")
-    public List<AlgorithmListDto> getList(@PathVariable Long folderId) {
-        return algorithmService.getAlgorithmList(folderId);
+    @GetMapping("/list")
+    public List<AlgorithmListDto> getList(@RequestParam Long folderId) {
+        return algorithmService.getFolderAlgorithmList(folderId);
     }
 
     @PostMapping
