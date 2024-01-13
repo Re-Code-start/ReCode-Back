@@ -96,7 +96,13 @@ public class AlgorithmService {
     public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
         Algorithm algorithm = getAlgorithm(algorithmId);
         getAlgorithm(algorithmId).updateName(algorithmName);
-        return getFolderAlgorithmList(algorithm.getFolder().getId());
+
+        if (algorithm.getFolder() != null) {
+            return getFolderAlgorithmList(algorithm.getFolder().getId());
+        }
+        else {
+            return getUserGroupAlgorithmList(algorithm.getUserGroup());
+        }
     }
 
     public List<AlgorithmListDto> deleteAlgorithm(Long algorithmId) {
@@ -104,7 +110,12 @@ public class AlgorithmService {
 
         algorithmRepository.delete(algorithm);
 
-        return getFolderAlgorithmList(algorithm.getFolder().getId());
+        if (algorithm.getFolder() != null) {
+            return getFolderAlgorithmList(algorithm.getFolder().getId());
+        }
+        else {
+            return getUserGroupAlgorithmList(algorithm.getUserGroup());
+        }
     }
 
     public void updateNoteAlgorithm(List<Long> algorithmIds, Note note) {
