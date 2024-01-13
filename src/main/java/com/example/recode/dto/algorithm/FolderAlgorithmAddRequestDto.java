@@ -2,7 +2,6 @@ package com.example.recode.dto.algorithm;
 
 import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
-import com.example.recode.domain.Note;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AlgorithmAddRequestDto {
+public class FolderAlgorithmAddRequestDto {
 
     private Long folderId;
 

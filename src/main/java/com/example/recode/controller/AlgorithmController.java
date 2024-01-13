@@ -1,6 +1,6 @@
 package com.example.recode.controller;
 
-import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
+import com.example.recode.dto.algorithm.FolderAlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.service.AlgorithmService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +35,7 @@ public class AlgorithmController {
     }
 
     @PostMapping
-    public List<AlgorithmListDto> add(@RequestBody AlgorithmAddRequestDto dto) {
+    public List<AlgorithmListDto> add(@RequestBody FolderAlgorithmAddRequestDto dto) {
         return algorithmService.addFolderAlgorithm(dto);
     }
 

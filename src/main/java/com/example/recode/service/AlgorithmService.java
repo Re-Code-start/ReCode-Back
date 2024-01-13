@@ -6,7 +6,7 @@ import com.example.recode.domain.Group;
 import com.example.recode.domain.Note;
 import com.example.recode.domain.User_Group;
 import com.example.recode.domain.Users;
-import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
+import com.example.recode.dto.algorithm.FolderAlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
@@ -67,7 +67,7 @@ public class AlgorithmService {
                 .collect(Collectors.toList());
     }
 
-    public List<AlgorithmListDto> addFolderAlgorithm(AlgorithmAddRequestDto dto) {
+    public List<AlgorithmListDto> addFolderAlgorithm(FolderAlgorithmAddRequestDto dto) {
 
         Folder folder = folderRepository.findById(dto.getFolderId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
