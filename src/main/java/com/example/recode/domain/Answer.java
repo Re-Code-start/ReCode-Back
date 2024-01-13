@@ -39,6 +39,9 @@ public class Answer {
     @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
     private List<Vote> votes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "answer", cascade = CascadeType.ALL)
+    private List<Algorithm> algorithms = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
@@ -47,7 +50,4 @@ public class Answer {
     @JoinColumn(name = "problem_id")
     private Problem problem;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "algorithm_id")
-    private Algorithm algorithm;
 }
