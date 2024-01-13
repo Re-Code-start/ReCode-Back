@@ -8,6 +8,7 @@ import com.example.recode.domain.User_Group;
 import com.example.recode.domain.Users;
 import com.example.recode.dto.algorithm.FolderAlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
+import com.example.recode.dto.algorithm.GroupRoomAlgorithmAddRequestDto;
 import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.GroupRepository;
@@ -75,6 +76,20 @@ public class AlgorithmService {
         algorithmRepository.save(dto.toEntity(folder));
 
         return getFolderAlgorithmList(dto.getFolderId());
+    }
+
+    public List<AlgorithmListDto> addGroupRoomAlgorithm(GroupRoomAlgorithmAddRequestDto dto) {
+        Group group = groupRepository.findById(dto.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
+
+        Users user = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다."));
+
+        User_Group userGroup = userGroupRepository.findByGroupMemberAndGroup(user, group);
+
+        algorithmRepository.save(dto.toEntity(userGroup));
+
+        return getGroupRoomAlgorithmList(dto.getGroupId(), dto.getUserId());
     }
 
     public void addNoteAlgorithm(List<String> nameList, Note note) {
