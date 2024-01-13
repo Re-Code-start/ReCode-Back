@@ -24,7 +24,7 @@ public class FolderController {
     private final FolderService folderService;
 
     @GetMapping("/list/{userId}")
-    public List<FolderListDto> getList(@PathVariable String userId) {
+    public List<FolderListDto> getList(@PathVariable Long userId) {
         return folderService.getFolderList(userId);
     }
 

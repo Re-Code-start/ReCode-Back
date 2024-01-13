@@ -1,6 +1,6 @@
 package com.example.recode.service;
 
-import com.example.recode.domain.User;
+import com.example.recode.domain.Users;
 import com.example.recode.dto.UserDto;
 import com.example.recode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
         if (nickname == null || nickname.trim().isEmpty()) {
             throw new IllegalArgumentException("닉네임을 입력해주세요.");
         }
-        Optional<User> optionalMember = userRepository.findByNickname(nickname);
+        Optional<Users> optionalMember = userRepository.findByNickname(nickname);
         if (optionalMember.isEmpty())
             return false;
         else
@@ -30,9 +30,9 @@ public class UserServiceImpl implements UserService{
     public boolean join(UserDto reqDto) {
         reqDto.setPassword(passwordEncoder.encode(reqDto.getPassword()));
 
-        User user = reqDto.toEntity();
+        Users users = reqDto.toEntity();
         try{
-            userRepository.save(user);
+            userRepository.save(users);
             return true;
         }catch(Exception e){
             throw new RuntimeException("회원 가입 중 에러가 발생하였습니다.", e);

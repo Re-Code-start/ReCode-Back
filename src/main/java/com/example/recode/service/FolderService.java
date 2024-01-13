@@ -1,7 +1,7 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Folder;
-import com.example.recode.domain.User;
+import com.example.recode.domain.Users;
 import com.example.recode.dto.folder.FolderAddRequestDto;
 import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.repository.FolderRepository;
@@ -28,10 +28,10 @@ public class FolderService {
     }
 
     @Transactional(readOnly = true)
-    public List<FolderListDto> getFolderList(String userId) {
-        User user = userRepository.findById(userId)
+    public List<FolderListDto> getFolderList(Long userId) {
+        Users users = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 정보입니다."));
-        List<Folder> folders = folderRepository.findAllByUser(user);
+        List<Folder> folders = folderRepository.findAllByUser(users);
         return folders.stream()
                 .map(folder -> FolderListDto.builder()
                         .id(folder.getId())
@@ -42,9 +42,9 @@ public class FolderService {
 
     @Transactional
     public void addFolder(FolderAddRequestDto dto) {
-        User user = userRepository.findById(dto.getUserId())
+        Users users = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 정보입니다."));
-        Folder folder = dto.toEntity(user);
+        Folder folder = dto.toEntity(users);
         folderRepository.save(folder);
     }
 

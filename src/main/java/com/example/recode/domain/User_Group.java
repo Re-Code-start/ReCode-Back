@@ -32,7 +32,7 @@ public class User_Group {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "groupMember_id")
-    private User groupMember;
+    private Users groupMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")

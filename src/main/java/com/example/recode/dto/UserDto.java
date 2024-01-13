@@ -1,6 +1,6 @@
 package com.example.recode.dto;
 
-import com.example.recode.domain.User;
+import com.example.recode.domain.Users;
 import lombok.Builder;
 
 import javax.validation.constraints.NotBlank;
@@ -24,8 +24,8 @@ public class UserDto {
     private String email;
 
     @Builder
-    public User toEntity() {
-        return User.builder()
+    public Users toEntity() {
+        return Users.builder()
                 .nickname(nickname)
                 .password(password)
                 .email(email)
