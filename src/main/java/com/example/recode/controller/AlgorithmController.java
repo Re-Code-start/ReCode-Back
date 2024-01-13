@@ -40,6 +40,11 @@ public class AlgorithmController {
         return algorithmService.addFolderAlgorithm(dto);
     }
 
+    @PostMapping("/group-room")
+    public List<AlgorithmListDto> add(@RequestBody GroupRoomAlgorithmAddRequestDto dto) {
+        return algorithmService.addGroupRoomAlgorithm(dto);
+    }
+
     @PutMapping("/{algorithmId}/{algorithmName}")
     public List<AlgorithmListDto> update(@PathVariable Long algorithmId, @PathVariable String algorithmName) {
         return algorithmService.updateAlgorithmName(algorithmId, algorithmName);
