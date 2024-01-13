@@ -60,12 +60,7 @@ public class AlgorithmService {
 
         User_Group userGroup = userGroupRepository.findByGroupMemberAndGroup(user, group);
 
-        return algorithmRepository.findAllByUserGroup(userGroup).stream()
-                .map(algorithm -> AlgorithmListDto.builder()
-                        .id(algorithm.getId())
-                        .name(algorithm.getName())
-                        .build())
-                .collect(Collectors.toList());
+        return getUserGroupAlgorithmList(userGroup);
     }
 
     public List<AlgorithmListDto> addFolderAlgorithm(FolderAlgorithmAddRequestDto dto) {
@@ -139,5 +134,14 @@ public class AlgorithmService {
             }
         }
         addNoteAlgorithm(algorithmNamesToAdd, note);
+    }
+
+    private List<AlgorithmListDto> getUserGroupAlgorithmList(User_Group userGroup) {
+        return algorithmRepository.findAllByUserGroup(userGroup).stream()
+                .map(algorithm -> AlgorithmListDto.builder()
+                        .id(algorithm.getId())
+                        .name(algorithm.getName())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
