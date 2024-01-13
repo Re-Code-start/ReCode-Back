@@ -2,6 +2,7 @@ package com.example.recode.controller;
 
 import com.example.recode.dto.algorithm.FolderAlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
+import com.example.recode.dto.algorithm.GroupRoomAlgorithmAddRequestDto;
 import com.example.recode.service.AlgorithmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,17 +25,17 @@ public class AlgorithmController {
 
     private final AlgorithmService algorithmService;
 
-    @GetMapping("/list")
-    public List<AlgorithmListDto> getList(@RequestParam Long folderId) {
+    @GetMapping("/list/{folderId}")
+    public List<AlgorithmListDto> getList(@PathVariable Long folderId) {
         return algorithmService.getFolderAlgorithmList(folderId);
     }
 
-    @GetMapping("/list")
-    public List<AlgorithmListDto> getList(@RequestParam Long groupId, @RequestParam Long userId) {
+    @GetMapping("/list/{groupId}/{userId}")
+    public List<AlgorithmListDto> getList(@PathVariable Long groupId, @PathVariable Long userId) {
         return algorithmService.getGroupRoomAlgorithmList(groupId, userId);
     }
 
-    @PostMapping
+    @PostMapping("/folder")
     public List<AlgorithmListDto> add(@RequestBody FolderAlgorithmAddRequestDto dto) {
         return algorithmService.addFolderAlgorithm(dto);
     }
