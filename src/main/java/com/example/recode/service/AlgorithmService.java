@@ -2,12 +2,17 @@ package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
+import com.example.recode.domain.Group;
 import com.example.recode.domain.Note;
+import com.example.recode.domain.User_Group;
+import com.example.recode.domain.Users;
 import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
-import com.example.recode.repository.NoteRepository;
+import com.example.recode.repository.GroupRepository;
+import com.example.recode.repository.UserRepository;
+import com.example.recode.repository.User_GroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +29,9 @@ public class AlgorithmService {
 
     private final AlgorithmRepository algorithmRepository;
     private final FolderRepository folderRepository;
+    private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
+    private final User_GroupRepository userGroupRepository;
 
     public Algorithm getAlgorithm(Long algorithmId) {
         return algorithmRepository.findById(algorithmId)
@@ -35,6 +43,23 @@ public class AlgorithmService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 폴더입니다."));
 
         return algorithmRepository.findAllByFolder(folder).stream()
+                .map(algorithm -> AlgorithmListDto.builder()
+                        .id(algorithm.getId())
+                        .name(algorithm.getName())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public List<AlgorithmListDto> getGroupRoomAlgorithmList(Long groupId, Long userId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
+
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 유저입니다."));
+
+        User_Group userGroup = userGroupRepository.findByGroupMemberAndGroup(user, group);
+
+        return algorithmRepository.findAllByUserGroup(userGroup).stream()
                 .map(algorithm -> AlgorithmListDto.builder()
                         .id(algorithm.getId())
                         .name(algorithm.getName())
