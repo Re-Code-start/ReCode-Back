@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -24,6 +25,17 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<Boolean> join(@Valid @RequestBody UserDto user) {
         return ResponseEntity.ok(userService.join(user));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, String> userInfo) {
+        System.out.println("test");
+        String nickname = userInfo.get("nickname");
+        String password = userInfo.get("password");
+        System.out.println(nickname+","+password);
+        String tokenInfo = userService.login(nickname, password);
+        System.out.println(tokenInfo);
+        return ResponseEntity.ok().body(tokenInfo);
     }
 
     @ExceptionHandler(Exception.class)

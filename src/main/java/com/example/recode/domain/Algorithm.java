@@ -31,6 +31,7 @@ public class Algorithm {
     private String name;    // 알고리즘명
 
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "folder_id")
     private Folder folder;
 

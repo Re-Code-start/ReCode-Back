@@ -1,5 +1,6 @@
 package com.example.recode.dto;
 
+import com.example.recode.domain.MembershipLevel;
 import com.example.recode.domain.Users;
 import lombok.Builder;
 
@@ -29,6 +30,7 @@ public class UserDto {
                 .nickname(nickname)
                 .password(password)
                 .email(email)
+                .membershipLevel(MembershipLevel.BASIC)
                 .build();
     }
 

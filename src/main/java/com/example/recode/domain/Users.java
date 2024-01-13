@@ -5,14 +5,19 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import lombok.Builder;
 import org.hibernate.annotations.ColumnDefault;
+import lombok.Getter;
+import lombok.Setter;
 
-@Builder
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Getter
-@NoArgsConstructor
+@Builder
 public class Users {
 
     @Id
@@ -23,16 +28,15 @@ public class Users {
 
     private String nickname;    // 닉네임
 
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private MembershipLevel membershipLevel = MembershipLevel.BASIC;    // 멤버쉽 등급
-
     private String imageUrl;    // 프로필이미지URL
 
     @ColumnDefault("0")
     private int heart;          // 받은 하트 수
 
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private MembershipLevel membershipLevel;
 
     @OneToMany(mappedBy = "groupLeader", cascade = CascadeType.ALL)
     private List<Group> groups = new ArrayList<>();

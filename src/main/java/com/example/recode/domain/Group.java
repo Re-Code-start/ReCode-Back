@@ -1,7 +1,7 @@
 package com.example.recode.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -18,7 +18,10 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "group_table")
 public class Group {
 
@@ -32,6 +35,10 @@ public class Group {
 
     private int maxUser;    // 최대인원수
 
+    @ColumnDefault("0")
+    private int currentUsers; // 현재인원수
+
+    @ColumnDefault("0")
     private double participation;   // 참여도
 
     private String imageUrl;        // 그룹이미지URL
@@ -45,5 +52,4 @@ public class Group {
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Challenge> challenges = new ArrayList<>();
-
 }

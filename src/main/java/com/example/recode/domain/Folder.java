@@ -46,7 +46,7 @@ public class Folder {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private Users users;
+    private Users user;
 
     public void updateFolderName(String folderName) {
         this.name = folderName;
