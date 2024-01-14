@@ -49,7 +49,7 @@ public class AnswerService {
             answer.updateComment(dto.getComment());
         }
         if (dto.getAlgorithmIds() != null) {
-            algorithmService.updateAnswerAlgorithm(dto.getAlgorithmIds(), answer);
+            algorithmService.updateAlgorithms(dto.getAlgorithmIds(), answer);
         }
     }
 
