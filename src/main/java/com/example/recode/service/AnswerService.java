@@ -38,4 +38,19 @@ public class AnswerService {
         }
     }
 
+    public void updateAnswer(Long answerId, AnswerUpdateRequestDto dto) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이 코드입니다."));
+
+        if (dto.getCode() != null) {
+            answer.updateCode(dto.getCode());
+        }
+        if (dto.getComment() != null) {
+            answer.updateComment(dto.getComment());
+        }
+        if (dto.getAlgorithmIds() != null) {
+            algorithmService.updateAnswerAlgorithm(dto.getAlgorithmIds(), answer);
+        }
+    }
+
 }
