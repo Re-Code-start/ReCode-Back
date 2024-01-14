@@ -59,4 +59,11 @@ public class Answer {
     @JoinColumn(name = "problem_id")
     private Problem problem;
 
+    public void updateCode(String code) {
+        this.code = code;
+    }
+
+    public void updateComment(String comment) {
+        this.comment = comment;
+    }
 }

@@ -154,6 +154,35 @@ public class AlgorithmService {
         addNoteAlgorithm(algorithmNamesToAdd, note);
     }
 
+    public void updateAnswerAlgorithm(List<Long> algorithmIds, Answer answer) {
+        Set<Algorithm> oldAlgorithms = new HashSet<>(answer.getAlgorithms());
+        Set<Algorithm> newAlgorithms = new HashSet<>();
+
+        for (Long algorithmId : algorithmIds) {
+            Algorithm algorithm = getAlgorithm(algorithmId);
+            newAlgorithms.add(algorithm);
+        }
+
+        List<Algorithm> algorithmsToRemove = new ArrayList<>();
+        List<String> algorithmNamesToAdd = new ArrayList<>();
+
+        // 옛 리스트에만 있는 것 -> 삭제
+        for (Algorithm algorithm : oldAlgorithms) {
+            if (!newAlgorithms.contains(algorithm)) {
+                algorithmsToRemove.add(algorithm);
+            }
+        }
+        algorithmRepository.deleteAll(algorithmsToRemove);
+
+        // 새 리스트에만 있는 것 -> 추가
+        for (Algorithm algorithm : newAlgorithms) {
+            if (!oldAlgorithms.contains(algorithm)) {
+                algorithmNamesToAdd.add(algorithm.getName());
+            }
+        }
+        addAnswerAlgorithm(algorithmNamesToAdd, answer);
+    }
+
     private List<AlgorithmListDto> getUserGroupAlgorithmList(User_Group userGroup) {
         return algorithmRepository.findAllByUserGroup(userGroup).stream()
                 .map(algorithm -> AlgorithmListDto.builder()
