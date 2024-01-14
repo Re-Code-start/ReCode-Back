@@ -90,7 +90,7 @@ public class NoteService {
             note.updateImprovement(dto.getImprovement());
         }
         if (dto.getAlgorithmIds() != null) {
-            algorithmService.updateNoteAlgorithm(dto.getAlgorithmIds(), note);
+            algorithmService.updateAlgorithms(dto.getAlgorithmIds(), note);
         }
     }
 
