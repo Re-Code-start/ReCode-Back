@@ -1,6 +1,7 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
+import com.example.recode.domain.Answer;
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Group;
 import com.example.recode.domain.Note;
@@ -90,6 +91,12 @@ public class AlgorithmService {
     public void addNoteAlgorithm(List<String> nameList, Note note) {
         for (String name:nameList) {
             algorithmRepository.save(Algorithm.builder().name(name).note(note).build());
+        }
+    }
+
+    public void addAnswerAlgorithm(List<String> nameList, Answer answer) {
+        for (String name:nameList) {
+            algorithmRepository.save(Algorithm.builder().name(name).answer(answer).build());
         }
     }
 
