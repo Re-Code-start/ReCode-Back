@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class AnswerService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 문제입니다."));
 
         if (answerRepository.existsByProblemAndUser(problem, user)) {
-            new IllegalAccessException("이미 등록된 풀이 코드가 존재합니다.");
+            throw new RuntimeException("이미 등록된 풀이 코드가 존재합니다.");
         }
         else {
             Answer answer = answerRepository.save(dto.toEntity(user, problem));
@@ -41,6 +42,11 @@ public class AnswerService {
     public void updateAnswer(Long answerId, AnswerUpdateRequestDto dto) {
         Answer answer = answerRepository.findById(answerId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이 코드입니다."));
+
+        LocalDateTime challengeEndDt = answer.getProblem().getChallenge().getEndDt();
+        if (LocalDateTime.now().isAfter(challengeEndDt)) {
+            throw new RuntimeException("종료된 챌린지에 대해서는 풀이 코드를 수정할 수 없습니다.");
+        }
 
         if (dto.getCode() != null) {
             answer.updateCode(dto.getCode());
