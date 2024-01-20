@@ -2,6 +2,7 @@ package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
+import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
@@ -71,6 +72,26 @@ public class AlgorithmServiceTest {
         assertEquals(2, result.size());
         assertEquals("algorithm1", result.get(0).getName());
         assertEquals("algorithm2", result.get(1).getName());
+    }
+
+    @Test
+    public void addFolderAlgorithmTest() {
+        // given
+        Folder folder = Folder.builder().id(1L).build();
+
+        AlgorithmAddRequestDto dto = AlgorithmAddRequestDto.builder()
+                .folderId(1L)
+                .algorithmName("newAlgorithm")
+                .build();
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(algorithmRepository.save(any(Algorithm.class))).thenAnswer(i -> i.getArgument(0));
+
+        // when
+        algorithmService.addFolderAlgorithm(dto);
+
+        // then
+        verify(algorithmRepository, times(1)).save(any(Algorithm.class));
     }
 
 }
