@@ -1,11 +1,13 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
+import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.recode.domain.FeedbackType;
+import com.example.recode.domain.Folder;
 import com.example.recode.domain.Note;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.NoteRepository;
@@ -14,10 +16,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,6 +71,45 @@ public class NoteServiceTest {
         assertEquals("improvement", result.getImprovement());
         assertEquals("comment", result.getComment());
         assertEquals(Arrays.asList("algorithm1", "algorithm2"), result.getAlgorithmList());
+    }
+
+    @Test
+    public void getNoteListTest() {
+        // given
+        Folder folder = Folder.builder()
+                .name("folderName")
+                .notes(new ArrayList<>())
+                .algorithms(new ArrayList<>())
+                .build();
+
+        List<Note> noteList = Arrays.asList(
+                Note.builder()
+                        .id(1L)
+                        .title("note1")
+                        .folder(folder)
+                        .createDt(LocalDateTime.now())
+                        .build(),
+                Note.builder()
+                        .id(2L)
+                        .title("note2")
+                        .folder(folder)
+                        .createDt(LocalDateTime.now().minusDays(1))
+                        .build()
+        );
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(noteRepository.findAllByFolder(any(Folder.class))).thenReturn(noteList);
+
+        // when
+        List<NoteListDto> result = noteService.getNoteList(1L);
+
+        // then
+        verify(folderRepository, times(1)).findById(anyLong());
+        verify(noteRepository, times(1)).findAllByFolder(any(Folder.class));
+
+        assertEquals(2, result.size());
+        assertEquals("note1", result.get(0).getTitle());
+        assertEquals("note2", result.get(1).getTitle());
     }
 
 }
