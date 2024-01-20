@@ -242,5 +242,30 @@ public class NoteServiceTest {
         assertEquals("newImprovement", note.getImprovement());
     }
 
+    @Test
+    public void updateNoteTest_Algorithm() {
+        // given
+        Note note = Note.builder()
+                .id(1L)
+                .newCode("oldCode")
+                .improvement("oldImprovement")
+                .build();
+
+        NoteUpdateRequestDto dto = NoteUpdateRequestDto.builder()
+                .algorithmIds(Arrays.asList(1L, 2L))
+                .build();
+
+        when(noteRepository.findById(anyLong())).thenReturn(Optional.of(note));
+
+        // when
+        noteService.updateNote(1L, dto);
+
+        // then
+        verify(noteRepository, times(1)).findById(anyLong());
+        verify(algorithmService, times(1)).updateNoteAlgorithm(anyList(), any(Note.class));
+        assertEquals("oldCode", note.getNewCode());
+        assertEquals("oldImprovement", note.getImprovement());
+    }
+
 }
 
