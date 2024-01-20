@@ -2,6 +2,7 @@ package com.example.recode.service;
 
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Users;
+import com.example.recode.dto.folder.FolderAddRequestDto;
 import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.UserRepository;
@@ -70,6 +71,27 @@ public class FolderServiceTest {
         assertEquals(2, result.size());
         assertEquals("folder1", result.get(0).getName());
         assertEquals("folder2", result.get(1).getName());
+    }
+
+    @Test
+    public void addFolderTest() {
+        // given
+        Users user = Users.builder().id(1L).build();
+
+        FolderAddRequestDto dto = FolderAddRequestDto.builder()
+                .userId(1L)
+                .name("name")
+                .build();
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(folderRepository.save(any(Folder.class))).thenAnswer(i -> i.getArgument(0));
+
+        // when
+        folderService.addFolder(dto);
+
+        // then
+        verify(userRepository, times(1)).findById(anyLong());
+        verify(folderRepository, times(1)).save(any(Folder.class));
     }
 
 }
