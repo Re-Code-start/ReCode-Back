@@ -146,5 +146,23 @@ public class NoteServiceTest {
         verify(algorithmService, times(1)).addNoteAlgorithm(anyList(), any(Note.class));
     }
 
+    @Test
+    public void updateNoteTitleTest() {
+        // given
+        Note note = Note.builder()
+                .id(1L)
+                .title("oldTitle")
+                .build();
+
+        when(noteRepository.findById(anyLong())).thenReturn(Optional.of(note));
+
+        // when
+        noteService.updateNoteTitle(1L, "newTitle");
+
+        // then
+        verify(noteRepository, times(1)).findById(anyLong());
+        assertEquals("newTitle", note.getTitle());
+    }
+
 }
 
