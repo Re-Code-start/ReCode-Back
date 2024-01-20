@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.example.recode.domain.FeedbackType;
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Note;
+import com.example.recode.dto.note.NoteAddRequestDto;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.NoteRepository;
 
@@ -110,6 +111,39 @@ public class NoteServiceTest {
         assertEquals(2, result.size());
         assertEquals("note1", result.get(0).getTitle());
         assertEquals("note2", result.get(1).getTitle());
+    }
+
+    @Test()
+    public void addNoteTest() {
+        //given
+        Folder folder = Folder.builder()
+                .name("folderName")
+                .notes(new ArrayList<>())
+                .algorithms(new ArrayList<>())
+                .build();
+
+        NoteAddRequestDto dto = NoteAddRequestDto.builder()
+                .title("title")
+                .link("link")
+                .feedbackType(FeedbackType.REVIEW_NOTE)
+                .oldCode("oldCode")
+                .newCode("newCode")
+                .improvement("improvement")
+                .comment("comment")
+                .folderId(1L)
+                .algorithmNameList(Arrays.asList("algorithm1", "algorithm2"))
+                .build();
+
+        //when
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(noteRepository.save(any(Note.class))).thenAnswer(i -> i.getArgument(0));
+
+        noteService.addNote(dto);
+
+        //then
+        verify(folderRepository, times(1)).findById(anyLong());
+        verify(noteRepository, times(1)).save(any(Note.class));
+        verify(algorithmService, times(1)).addNoteAlgorithm(anyList(), any(Note.class));
     }
 
 }
