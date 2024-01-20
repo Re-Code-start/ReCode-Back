@@ -25,7 +25,7 @@ public class FolderAddRequestDto {
     public Folder toEntity(Users user) {
         return Folder.builder()
                 .name(name)
-                .users(users)
+                .user(user)
                 .build();
     }
 
