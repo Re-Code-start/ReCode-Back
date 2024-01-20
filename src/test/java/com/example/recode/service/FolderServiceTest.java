@@ -1,6 +1,8 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Folder;
+import com.example.recode.domain.Users;
+import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,6 +45,31 @@ public class FolderServiceTest {
         // then
         verify(folderRepository, times(1)).findById(anyLong());
         assertEquals("name", result.getName());
+    }
+
+    @Test
+    public void getFolderListTest() {
+        // given
+        Users user = Users.builder().id(1L).build();
+
+        List<Folder> folderList = Arrays.asList(
+                Folder.builder().id(1L).name("folder1").build(),
+                Folder.builder().id(2L).name("folder2").build()
+        );
+
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        when(folderRepository.findAllByUser(any(Users.class))).thenReturn(folderList);
+
+        // when
+        List<FolderListDto> result = folderService.getFolderList(1L);
+
+        // then
+        verify(userRepository, times(1)).findById(anyLong());
+        verify(folderRepository, times(1)).findAllByUser(any(Users.class));
+
+        assertEquals(2, result.size());
+        assertEquals("folder1", result.get(0).getName());
+        assertEquals("folder2", result.get(1).getName());
     }
 
 }
