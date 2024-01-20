@@ -110,4 +110,29 @@ public class AlgorithmServiceTest {
         verify(algorithmRepository, times(nameList.size())).save(any(Algorithm.class));
     }
 
+    @Test
+    public void updateAlgorithmNameTest() {
+        // given
+        Folder folder = Folder.builder().id(1L).build();
+
+        Algorithm algorithm = Algorithm.builder()
+                .id(1L)
+                .name("oldName")
+                .folder(folder)
+                .build();
+
+        String newName = "newName";
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(algorithmRepository.findById(anyLong())).thenReturn(Optional.of(algorithm));
+
+        // when
+        algorithmService.updateAlgorithmName(1L, newName);
+
+        // then
+        verify(algorithmRepository, times(1)).findById(anyLong());
+
+        assertEquals(newName, algorithm.getName());
+    }
+
 }
