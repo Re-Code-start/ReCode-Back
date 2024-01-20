@@ -1,6 +1,8 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
+import com.example.recode.domain.Folder;
+import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,6 +46,31 @@ public class AlgorithmServiceTest {
         // then
         verify(algorithmRepository, times(1)).findById(anyLong());
         assertEquals("name", result.getName());
+    }
+
+    @Test
+    public void getAlgorithmListTest() {
+        // given
+        Folder folder = Folder.builder().id(1L).build();
+
+        List<Algorithm> algorithmList = Arrays.asList(
+                Algorithm.builder().id(1L).name("algorithm1").build(),
+                Algorithm.builder().id(2L).name("algorithm2").build()
+        );
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(algorithmRepository.findAllByFolder(any(Folder.class))).thenReturn(algorithmList);
+
+        // when
+        List<AlgorithmListDto> result = algorithmService.getAlgorithmList(1L);
+
+        // then
+        verify(folderRepository, times(1)).findById(anyLong());
+        verify(algorithmRepository, times(1)).findAllByFolder(any(Folder.class));
+
+        assertEquals(2, result.size());
+        assertEquals("algorithm1", result.get(0).getName());
+        assertEquals("algorithm2", result.get(1).getName());
     }
 
 }
