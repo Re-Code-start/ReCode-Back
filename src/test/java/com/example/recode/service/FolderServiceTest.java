@@ -114,4 +114,22 @@ public class FolderServiceTest {
         assertEquals(newName, folder.getName());
     }
 
+    @Test
+    public void deleteFolderTest() {
+        // given
+        Folder folder = Folder.builder()
+                .id(1L)
+                .name("oldName")
+                .build();
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+
+        // when
+        folderService.deleteFolder(1L);
+
+        // then
+        verify(folderRepository, times(1)).findById(anyLong());
+        verify(folderRepository, times(1)).delete(any(Folder.class));
+    }
+
 }
