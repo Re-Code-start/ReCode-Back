@@ -2,6 +2,7 @@ package com.example.recode.service;
 
 import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
+import com.example.recode.domain.Note;
 import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.repository.AlgorithmRepository;
@@ -92,6 +93,21 @@ public class AlgorithmServiceTest {
 
         // then
         verify(algorithmRepository, times(1)).save(any(Algorithm.class));
+    }
+
+    @Test
+    public void addNoteAlgorithmTest() {
+        // given
+        Note note = Note.builder().id(1L).build();
+        List<String> nameList = Arrays.asList("algorithm1", "algorithm2");
+
+        when(algorithmRepository.save(any(Algorithm.class))).thenAnswer(i -> i.getArgument(0));
+
+        // when
+        algorithmService.addNoteAlgorithm(nameList, note);
+
+        // then
+        verify(algorithmRepository, times(nameList.size())).save(any(Algorithm.class));
     }
 
 }
