@@ -3,6 +3,7 @@ package com.example.recode.service;
 import com.example.recode.domain.Algorithm;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
+import com.example.recode.dto.note.NoteUpdateRequestDto;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -162,6 +163,33 @@ public class NoteServiceTest {
         // then
         verify(noteRepository, times(1)).findById(anyLong());
         assertEquals("newTitle", note.getTitle());
+    }
+
+    @Test
+    public void updateNoteTest_All() {
+        // given
+        Note note = Note.builder()
+                .id(1L)
+                .newCode("oldCode")
+                .improvement("oldImprovement")
+                .build();
+
+        NoteUpdateRequestDto dto = NoteUpdateRequestDto.builder()
+                .newCode("newCode")
+                .improvement("newImprovement")
+                .algorithmIds(Arrays.asList(1L, 2L))
+                .build();
+
+        when(noteRepository.findById(anyLong())).thenReturn(Optional.of(note));
+
+        // when
+        noteService.updateNote(1L, dto);
+
+        // then
+        verify(noteRepository, times(1)).findById(anyLong());
+        verify(algorithmService, times(1)).updateNoteAlgorithm(anyList(), any(Note.class));
+        assertEquals("newCode", note.getNewCode());
+        assertEquals("newImprovement", note.getImprovement());
     }
 
 }
