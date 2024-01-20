@@ -60,7 +60,7 @@ public class AlgorithmService {
 
     public List<AlgorithmListDto> updateAlgorithmName(Long algorithmId, String algorithmName) {
         Algorithm algorithm = getAlgorithm(algorithmId);
-        getAlgorithm(algorithmId).updateName(algorithmName);
+        algorithm.updateName(algorithmName);
         return getAlgorithmList(algorithm.getFolder().getId());
     }
 
