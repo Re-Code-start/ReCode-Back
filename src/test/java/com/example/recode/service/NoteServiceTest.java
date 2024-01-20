@@ -267,5 +267,23 @@ public class NoteServiceTest {
         assertEquals("oldImprovement", note.getImprovement());
     }
 
+    @Test
+    public void deleteNoteTest() {
+        // given
+        Note note = Note.builder()
+                .id(1L)
+                .title("note")
+                .build();
+
+        when(noteRepository.findById(anyLong())).thenReturn(Optional.of(note));
+
+        // when
+        noteService.deleteNote(1L);
+
+        // then
+        verify(noteRepository, times(1)).findById(anyLong());
+        verify(noteRepository, times(1)).delete(any(Note.class));
+    }
+
 }
 
