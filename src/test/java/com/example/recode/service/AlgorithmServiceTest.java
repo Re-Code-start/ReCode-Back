@@ -135,4 +135,25 @@ public class AlgorithmServiceTest {
         assertEquals(newName, algorithm.getName());
     }
 
+    @Test
+    public void deleteAlgorithmTest() {
+        // given
+        Folder folder = Folder.builder().id(1L).build();
+
+        Algorithm algorithm = Algorithm.builder()
+                .id(1L)
+                .name("name")
+                .folder(folder)
+                .build();
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+        when(algorithmRepository.findById(anyLong())).thenReturn(Optional.of(algorithm));
+
+        // when
+        algorithmService.deleteAlgorithm(1L);
+
+        // then
+        verify(algorithmRepository, times(1)).delete(any(Algorithm.class));
+    }
+
 }
