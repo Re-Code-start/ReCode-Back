@@ -94,4 +94,24 @@ public class FolderServiceTest {
         verify(folderRepository, times(1)).save(any(Folder.class));
     }
 
+    @Test
+    public void updateFolderNameTest() {
+        // given
+        Folder folder = Folder.builder()
+                .id(1L)
+                .name("oldName")
+                .build();
+
+        String newName = "newName";
+
+        when(folderRepository.findById(anyLong())).thenReturn(Optional.of(folder));
+
+        // when
+        folderService.updateFolderName(1L, newName);
+
+        // then
+        verify(folderRepository, times(1)).findById(anyLong());
+        assertEquals(newName, folder.getName());
+    }
+
 }
