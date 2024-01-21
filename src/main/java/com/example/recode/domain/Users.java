@@ -38,30 +38,39 @@ public class Users {
     @Enumerated(EnumType.STRING)
     private MembershipLevel membershipLevel;
 
+    @Builder.Default
     @OneToMany(mappedBy = "groupLeader", cascade = CascadeType.ALL)
     private List<Group> groups = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "groupMember", cascade = CascadeType.ALL)
     private List<User_Group> user_groups = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Algorithm> algorithms = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Folder> folders = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Feedback> feedbacks = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Problem> problems = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "bestCoder", cascade = CascadeType.ALL)
     private List<Problem> bestCodeProblems = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "voter", cascade = CascadeType.ALL)
     private List<Vote> votes = new ArrayList<>();
 

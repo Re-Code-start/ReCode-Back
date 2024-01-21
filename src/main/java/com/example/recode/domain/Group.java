@@ -47,9 +47,11 @@ public class Group {
     @JoinColumn(name = "groupLeader_id")
     private Users groupLeader;
 
+    @Builder.Default
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<User_Group> user_groups = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Challenge> challenges = new ArrayList<>();
 }

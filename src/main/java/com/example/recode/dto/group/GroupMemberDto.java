@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 @Data
 public class GroupMemberDto {
     private Long memberId;
-    private LocalDateTime visitDt;  // 그룹원 방문일시
-    private LocalDateTime joinDt;   // 그룹 가입일시
-    private GroupMemberStatus status;    // 그룹원 상태
+    private LocalDateTime visitDt;
+    private LocalDateTime joinDt;
+    private GroupMemberStatus status;
     private String nickname;
     private String imageUrl;
 
