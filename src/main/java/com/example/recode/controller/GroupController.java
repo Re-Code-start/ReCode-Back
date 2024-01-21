@@ -1,6 +1,5 @@
 package com.example.recode.controller;
 
-import com.example.recode.domain.Group;
 import com.example.recode.dto.group.GroupGenerateDto;
 import com.example.recode.dto.group.GroupJoinDto;
 import com.example.recode.dto.group.GroupMemberDto;
