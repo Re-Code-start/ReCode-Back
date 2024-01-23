@@ -1,11 +1,13 @@
 package com.example.recode.service;
 
+import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Answer;
 import com.example.recode.domain.Group;
 import com.example.recode.domain.Problem;
 import com.example.recode.domain.Users;
 import com.example.recode.dto.answer.AnswerAddRequestDto;
 import com.example.recode.dto.answer.AnswerListDto;
+import com.example.recode.dto.answer.AnswerResponseDto;
 import com.example.recode.dto.answer.AnswerUpdateRequestDto;
 import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.repository.AnswerRepository;
@@ -29,6 +31,19 @@ public class AnswerService {
     private final ProblemRepository problemRepository;
     private final GroupRepository groupRepository;
     private final AlgorithmService algorithmService;
+
+    public AnswerResponseDto getAnswer(Long answerId) {
+        Answer answer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이입니다."));
+
+        return AnswerResponseDto.builder()
+                .title(answer.getProblem().getTitle())
+                .link(answer.getProblem().getLink())
+                .code(answer.getCode())
+                .comment(answer.getComment())
+                .algorithmList(answer.getAlgorithms().stream().map(Algorithm::getName).collect(Collectors.toList()))
+                .build();
+    }
 
     public List<AnswerListDto> getAnswerList(Long groupId) {
         Group group = groupRepository.findById(groupId)
