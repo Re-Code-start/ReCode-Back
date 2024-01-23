@@ -1,11 +1,15 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Answer;
+import com.example.recode.domain.Group;
 import com.example.recode.domain.Problem;
 import com.example.recode.domain.Users;
 import com.example.recode.dto.answer.AnswerAddRequestDto;
+import com.example.recode.dto.answer.AnswerListDto;
 import com.example.recode.dto.answer.AnswerUpdateRequestDto;
+import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.repository.AnswerRepository;
+import com.example.recode.repository.GroupRepository;
 import com.example.recode.repository.ProblemRepository;
 import com.example.recode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +27,22 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final UserRepository userRepository;
     private final ProblemRepository problemRepository;
+    private final GroupRepository groupRepository;
     private final AlgorithmService algorithmService;
+
+    public List<AnswerListDto> getAnswerList(Long groupId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹방입니다."));
+
+        return group.getChallenges().stream()
+                .flatMap(challenge -> challenge.getProblems().stream())
+                .flatMap(problem -> problem.getAnswers().stream())
+                .map(answer -> AnswerListDto.builder()
+                        .id(answer.getId())
+                        .title(answer.getProblem().getTitle())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     public void addAnswer(AnswerAddRequestDto dto) {
         Users user = userRepository.findById(dto.getUserId())
