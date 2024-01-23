@@ -2,7 +2,9 @@ package com.example.recode.controller;
 
 import com.example.recode.dto.answer.AnswerAddRequestDto;
 import com.example.recode.dto.answer.AnswerListDto;
+import com.example.recode.dto.answer.AnswerResponseDto;
 import com.example.recode.dto.answer.AnswerUpdateRequestDto;
+import com.example.recode.dto.note.NoteResponseDto;
 import com.example.recode.service.AnswerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,11 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
+
+    @GetMapping("/{answerId}")
+    public AnswerResponseDto get(@PathVariable Long answerId) {
+        return answerService.getAnswer(answerId);
+    }
 
     @GetMapping("/list/{groupId}")
     public List<AnswerListDto> getList(@PathVariable Long groupId) {
