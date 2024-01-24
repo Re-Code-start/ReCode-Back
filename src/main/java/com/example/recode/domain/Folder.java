@@ -40,11 +40,9 @@ public class Folder {
 
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
     private List<Note> notes = new ArrayList<>();
-/*
+
     @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
     private List<Algorithm> algorithms = new ArrayList<>();
-
- */
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
