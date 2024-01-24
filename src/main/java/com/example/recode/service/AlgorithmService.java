@@ -41,7 +41,7 @@ public class AlgorithmService {
                         .build())
                 .collect(Collectors.toList());
     }
-
+/*
     public List<AlgorithmListDto> addFolderAlgorithm(AlgorithmAddRequestDto dto) {
 
         Folder folder = folderRepository.findById(dto.getFolderId())
@@ -51,6 +51,8 @@ public class AlgorithmService {
 
         return getAlgorithmList(dto.getFolderId());
     }
+
+ */
 
     public void addNoteAlgorithm(List<String> nameList, Note note) {
         for (String name:nameList) {

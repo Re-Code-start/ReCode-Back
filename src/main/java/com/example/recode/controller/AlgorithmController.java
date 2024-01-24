@@ -27,11 +27,13 @@ public class AlgorithmController {
     public List<AlgorithmListDto> getList(@PathVariable Long folderId) {
         return algorithmService.getAlgorithmList(folderId);
     }
-
+/*
     @PostMapping
     public List<AlgorithmListDto> add(@RequestBody AlgorithmAddRequestDto dto) {
         return algorithmService.addFolderAlgorithm(dto);
     }
+
+ */
 
     @PutMapping("/{algorithmId}/{algorithmName}")
     public List<AlgorithmListDto> update(@PathVariable Long algorithmId, @PathVariable String algorithmName) {
