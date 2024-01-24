@@ -1,5 +1,6 @@
 package com.example.recode.dto.algorithm;
 
+import com.example.recode.domain.Algorithm;
 import com.example.recode.domain.Folder;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +19,12 @@ public class AlgorithmAddRequestDto {
 
     @NotBlank
     private String algorithmName;
-/*
+
     public Algorithm toEntity(Folder folder) {
         return Algorithm.builder()
                 .name(algorithmName)
                 .folder(folder)
                 .build();
     }
-
- */
 
 }

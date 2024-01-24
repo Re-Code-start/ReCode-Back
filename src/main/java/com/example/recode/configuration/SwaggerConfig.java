@@ -1,36 +1,20 @@
 package com.example.recode.configuration;
 
-import org.springframework.context.annotation.Bean;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Re:Code API 명세서",
+                description = "Recode API 명세서",
+                version = "v1"
+        )
+)
 @Configuration
-@EnableSwagger2
 public class SwaggerConfig {
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .host("localhost:8080")
-                .select()
-                //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.example.recode.controller"))  // 패키지 명시
-                .paths(PathSelectors.any())
-                .build()
-                .apiInfo(apiInfo());
-    }
+    private static final String BEARER_TOKEN_PREFIX = "Bearer";
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("ReCode MVP")
-                .description("Swagger 문서 설명")
-                .version("1.0")
-                .build();
-    }
+
 }

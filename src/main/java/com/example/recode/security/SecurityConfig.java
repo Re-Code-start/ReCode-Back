@@ -43,7 +43,11 @@ public class SecurityConfig {
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/group/").permitAll()
                 .antMatchers("/group/rank").permitAll()
-                .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/api-docs",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/api-docs/**",
+                        "/swagger-ui.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

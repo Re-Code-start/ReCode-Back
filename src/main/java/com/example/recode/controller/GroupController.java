@@ -5,6 +5,7 @@ import com.example.recode.dto.group.GroupJoinDto;
 import com.example.recode.dto.group.GroupMemberDto;
 import com.example.recode.dto.group.GroupReturnDto;
 import com.example.recode.service.GroupService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/group")
 @RequiredArgsConstructor
+@Tag(name = "Group", description = "Group API")
 public class GroupController {
     private final GroupService groupService;
 
