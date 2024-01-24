@@ -9,9 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @Data
 @Builder
@@ -39,9 +37,6 @@ public class NoteAddRequestDto {
 
     @NotNull
     private Long folderId;
-
-    @NotEmpty
-    private List<String> algorithmNameList;
 
     public Note toEntity(Folder folder) {
         return Note.builder()

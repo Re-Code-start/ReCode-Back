@@ -1,6 +1,5 @@
 package com.example.recode.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +25,7 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Note {
 
@@ -57,9 +54,6 @@ public class Note {
     @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
     private List<Question> questions = new ArrayList<>();
 
-    @OneToMany(mappedBy = "note", cascade = CascadeType.ALL)
-    private List<Algorithm> algorithms = new ArrayList<>();
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "folder_id")
     private Folder folder;
@@ -74,6 +68,18 @@ public class Note {
 
     public void updateImprovement(String improvement) {
         this.improvement = improvement;
+    }
+
+    @Builder
+    public Note(String title, String link, FeedbackType type, String oldCode, String newCode, String improvement, String comment, Folder folder) {
+        this.title = title;
+        this.link = link;
+        this.type = type;
+        this.oldCode = oldCode;
+        this.newCode = newCode;
+        this.improvement = improvement;
+        this.comment = comment;
+        this.folder = folder;
     }
 
 }
