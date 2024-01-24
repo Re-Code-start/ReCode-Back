@@ -45,7 +45,6 @@ public class NoteService {
                 .algorithmList(note.getAlgorithms().stream().map(Algorithm::getName).collect(Collectors.toList()))
                 .build();
     }
-
     @Transactional(readOnly = true)
     public List<NoteListDto> getNoteList(Long folderId) {
         Folder folder = folderRepository.findById(folderId)

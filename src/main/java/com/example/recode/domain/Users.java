@@ -45,10 +45,12 @@ public class Users {
     @Builder.Default
     @OneToMany(mappedBy = "groupMember", cascade = CascadeType.ALL)
     private List<User_Group> user_groups = new ArrayList<>();
-
+/*
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Algorithm> algorithms = new ArrayList<>();
+
+ */
 
     @Builder.Default
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

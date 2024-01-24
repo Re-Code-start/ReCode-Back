@@ -3,6 +3,7 @@ package com.example.recode.controller;
 import com.example.recode.dto.algorithm.AlgorithmAddRequestDto;
 import com.example.recode.dto.algorithm.AlgorithmListDto;
 import com.example.recode.service.AlgorithmService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/algorithms")
+@Tag(name = "Algorithm", description = "Algorithm API")
 public class AlgorithmController {
 
     private final AlgorithmService algorithmService;

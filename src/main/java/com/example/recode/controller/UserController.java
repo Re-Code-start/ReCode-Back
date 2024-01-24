@@ -2,6 +2,7 @@ package com.example.recode.controller;
 
 import com.example.recode.dto.UserDto;
 import com.example.recode.service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Map;
 
-@Controller
+@RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Tag(name = "User", description = "User API")
 public class UserController {
     private final UserService userService;
 
