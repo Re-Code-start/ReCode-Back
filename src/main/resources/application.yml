@@ -1,14 +1,15 @@
 spring:
   profiles:
     active: prod
-  java:
-    runtime:
-      version: 17
 
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 20MB
+
+java:
+  runtime:
+    version: 17
 
 jwt:
   secret: ${JWT_SECRET}
