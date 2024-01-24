@@ -5,6 +5,7 @@ import com.example.recode.domain.Users;
 import com.example.recode.dto.folder.FolderAddRequestDto;
 import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.repository.FolderRepository;
+import com.example.recode.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FolderService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
     private final FolderRepository folderRepository;
 
     @Transactional(readOnly = true)
@@ -27,9 +28,10 @@ public class FolderService {
     }
 
     @Transactional(readOnly = true)
-    public List<FolderListDto> getFolderList(String userId) {
-        Users user = userService.getUser(userId);
-        List<Folder> folders = folderRepository.findAllByUser(user);
+    public List<FolderListDto> getFolderList(Long userId) {
+        Users users = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 정보입니다."));
+        List<Folder> folders = folderRepository.findAllByUser(users);
         return folders.stream()
                 .map(folder -> FolderListDto.builder()
                         .id(folder.getId())
@@ -40,8 +42,9 @@ public class FolderService {
 
     @Transactional
     public void addFolder(FolderAddRequestDto dto) {
-        Users user = userService.getUser(dto.getUserId());
-        Folder folder = dto.toEntity(user);
+        Users users = userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자 정보입니다."));
+        Folder folder = dto.toEntity(users);
         folderRepository.save(folder);
     }
 

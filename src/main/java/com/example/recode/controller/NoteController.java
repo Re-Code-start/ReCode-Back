@@ -5,6 +5,7 @@ import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.dto.note.NoteResponseDto;
 import com.example.recode.dto.note.NoteUpdateRequestDto;
 import com.example.recode.service.NoteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/notes")
+@Tag(name = "Note", description = "Note API")
 public class NoteController {
 
     private final NoteService noteService;
@@ -47,9 +49,9 @@ public class NoteController {
         return ResponseEntity.ok("오답노트 제목 수정이 완료되었습니다.");
     }
 
-    @PutMapping("/{notedId}")
-    public ResponseEntity update(@PathVariable Long notedId, @RequestBody NoteUpdateRequestDto dto) {
-        noteService.updateNote(notedId, dto);
+    @PutMapping("/{noteId}")
+    public ResponseEntity update(@PathVariable Long noteId, @RequestBody NoteUpdateRequestDto dto) {
+        noteService.updateNote(noteId, dto);
         return ResponseEntity.ok("오답노트 수정이 완료되었습니다.");
     }
 

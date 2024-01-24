@@ -3,6 +3,7 @@ package com.example.recode.controller;
 import com.example.recode.dto.folder.FolderAddRequestDto;
 import com.example.recode.dto.folder.FolderListDto;
 import com.example.recode.service.FolderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,12 +20,13 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/folders")
+@Tag(name = "Folder", description = "Folder API")
 public class FolderController {
 
     private final FolderService folderService;
 
     @GetMapping("/list/{userId}")
-    public List<FolderListDto> getList(@PathVariable String userId) {
+    public List<FolderListDto> getList(@PathVariable Long userId) {
         return folderService.getFolderList(userId);
     }
 
