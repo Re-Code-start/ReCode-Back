@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS target/recode-backend-0.0.1-SNAPSHOT.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS ./build/libs/recode-backend-0.0.1-SNAPSHOT.jar
