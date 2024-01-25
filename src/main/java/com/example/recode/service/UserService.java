@@ -11,5 +11,7 @@ public interface UserService {
     String login(String username, String password);
 
     Users getUser(String userId);
+
+    Users findCurrentUser();
 }
 

@@ -4,8 +4,10 @@ import com.example.recode.domain.Users;
 import com.example.recode.dto.UserDto;
 import com.example.recode.repository.UserRepository;
 import com.example.recode.security.JwtTokenProvider;
+import com.example.recode.security.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +60,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public Users getUser(String userId) {
         return null;
+    }
+
+    @Override
+    public Users findCurrentUser() {
+        String currentUserId = SecurityUtil.getCurrentMemberId();
+        return userRepository.findById(Long.valueOf(currentUserId))
+                .orElseThrow(() -> new UsernameNotFoundException("유저를 찾을 수 없습니다. : " + currentUserId));
     }
 
 }
