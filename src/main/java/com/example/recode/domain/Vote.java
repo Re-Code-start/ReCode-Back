@@ -15,7 +15,9 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Vote {
 
     @Id
