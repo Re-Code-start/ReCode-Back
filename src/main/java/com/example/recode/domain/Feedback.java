@@ -29,6 +29,8 @@ public class Feedback {
 
     private LocalDateTime heartDt;  // 하트등록일시
 
+    private FeedbackType type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
