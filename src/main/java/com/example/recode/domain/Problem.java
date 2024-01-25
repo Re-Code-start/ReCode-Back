@@ -38,6 +38,9 @@ public class Problem {
     @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.ALL)
+    private List<Vote> votes = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private Users user;
