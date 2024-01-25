@@ -21,7 +21,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int line_num;   // 코드라인번호
+    private int lineNum;   // 코드라인번호
 
     private String content; // 피드백 내용
 
