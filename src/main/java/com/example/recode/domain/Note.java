@@ -19,7 +19,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +40,7 @@ public class Note {
     private String link;            // 문제링크
 
     @Enumerated(EnumType.STRING)
-    private FeedbackType type;      // 피드백 타입
+    private NoteType type;          // 노트 타입
 
     private String oldCode;         // 기존 코드
 

@@ -1,6 +1,6 @@
 package com.example.recode.dto.note;
 
-import com.example.recode.domain.FeedbackType;
+import com.example.recode.domain.NoteType;
 import com.example.recode.domain.Folder;
 import com.example.recode.domain.Note;
 import lombok.AllArgsConstructor;
@@ -26,7 +26,7 @@ public class NoteAddRequestDto {
     private String link;
 
     @NotNull
-    private FeedbackType feedbackType;
+    private NoteType noteType;
 
     @NotBlank
     private String oldCode;
@@ -47,7 +47,7 @@ public class NoteAddRequestDto {
         return Note.builder()
                 .title(title)
                 .link(link)
-                .type(feedbackType)
+                .type(noteType)
                 .oldCode(oldCode)
                 .newCode(newCode)
                 .improvement(improvement)

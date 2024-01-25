@@ -1,6 +1,6 @@
 package com.example.recode.dto.note;
 
-import com.example.recode.domain.FeedbackType;
+import com.example.recode.domain.NoteType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class NoteResponseDto {
 
     private String link;
 
-    private FeedbackType feedbackType;
+    private NoteType noteType;
 
     private String oldCode;
 

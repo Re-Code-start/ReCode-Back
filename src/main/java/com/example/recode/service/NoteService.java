@@ -11,12 +11,10 @@ import com.example.recode.repository.AlgorithmRepository;
 import com.example.recode.repository.FolderRepository;
 import com.example.recode.repository.NoteRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,7 +35,7 @@ public class NoteService {
         return NoteResponseDto.builder()
                 .title(note.getTitle())
                 .link(note.getLink())
-                .feedbackType(note.getType())
+                .noteType(note.getType())
                 .oldCode(note.getOldCode())
                 .newCode(note.getNewCode())
                 .improvement(note.getImprovement())
