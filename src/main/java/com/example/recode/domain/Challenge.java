@@ -35,7 +35,7 @@ public class Challenge {
 
     private double participation;   // 참여도
 
-    private boolean feedbackYn;     // 피드백 가능여부
+    private boolean feedbackVoteYN;     // 피드백 & 투표 가능여부
 
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     private List<Problem> problems = new ArrayList<>();
@@ -43,4 +43,8 @@ public class Challenge {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
+
+    public void closeFeedbackVote() {
+        this.feedbackVoteYN = false;
+    }
 }

@@ -17,7 +17,7 @@ public class ChallengeService {
         }
 
         // 방장이 피드백을 종료시켰다면 에러 발생
-        if (!challenge.isFeedbackYn()) {
+        if (!challenge.isFeedbackVoteYN()) {
             throw new RuntimeException("피드백 가능 기간이 아닙니다.");
         }
 
