@@ -25,6 +25,11 @@ public class ChallengeController {
         return challengeService.getUpcomingChallenge(groupId);
     }
 
+    @GetMapping("/{groupId}/ongoing")
+    public ChallengeResponseDto getOngoingChallenge(@PathVariable Long groupId) {
+        return challengeService.getOngoingChallenge(groupId);
+    }
+
     @GetMapping("/{groupId}/last")
     public List<ChallengeResponseDto> getLastChallenges(@PathVariable Long groupId, @RequestParam int pageNumber) {
         return challengeService.getLastChallenges(groupId, pageNumber);
