@@ -20,6 +20,11 @@ public class ChallengeController {
 
     private final ChallengeService challengeService;
 
+    @GetMapping("/{groupId}/upcoming")
+    public ChallengeResponseDto getUpcomingChallenge(@PathVariable Long groupId) {
+        return challengeService.getUpcomingChallenge(groupId);
+    }
+
     @GetMapping("/{groupId}/last")
     public List<ChallengeResponseDto> getLastChallenges(@PathVariable Long groupId, @RequestParam int pageNumber) {
         return challengeService.getLastChallenges(groupId, pageNumber);
