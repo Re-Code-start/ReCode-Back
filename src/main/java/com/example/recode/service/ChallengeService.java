@@ -1,19 +1,28 @@
 package com.example.recode.service;
 
 import com.example.recode.domain.Challenge;
+import com.example.recode.domain.Group;
 import com.example.recode.domain.Users;
+import com.example.recode.dto.challenge.ChallengeResponseDto;
 import com.example.recode.repository.ChallengeRepository;
+import com.example.recode.repository.GroupRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ChallengeService {
 
     private final ChallengeRepository challengeRepository;
+    private final GroupRepository groupRepository;
     private final UserService userService;
 
     public void validateChallenge(Challenge challenge) {
@@ -31,6 +40,19 @@ public class ChallengeService {
         if (challenge.getEndDt().plusDays(3).isBefore(LocalDateTime.now())) {
             throw new RuntimeException("피드백 가능 기간이 아닙니다.");
         }
+    }
+
+    public List<ChallengeResponseDto> getLastChallenges(Long groupId, int pageNumber) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
+
+        PageRequest pageRequest = PageRequest.of(pageNumber, 5, Sort.by("createDt").descending());
+
+        Page<Challenge> challenges = challengeRepository.findAllByGroupAndEndDtBefore(group, LocalDateTime.now(), pageRequest);
+
+        return challenges.stream()
+                .map(ChallengeResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public void closeFeedbackVote(Long challengeId) {
