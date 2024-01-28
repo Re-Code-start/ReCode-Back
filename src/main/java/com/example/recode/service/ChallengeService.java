@@ -42,6 +42,15 @@ public class ChallengeService {
         }
     }
 
+    public ChallengeResponseDto getUpcomingChallenge(Long groupId) {
+        Group group = groupRepository.findById(groupId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
+
+        return challengeRepository.findByGroupAndStartDtAfter(group, LocalDateTime.now())
+                .map(ChallengeResponseDto::new)
+                .orElse(null);
+    }
+
     public List<ChallengeResponseDto> getLastChallenges(Long groupId, int pageNumber) {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
