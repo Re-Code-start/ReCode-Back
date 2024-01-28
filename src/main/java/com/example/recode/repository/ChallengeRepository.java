@@ -13,6 +13,8 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
 
     Optional<Challenge> findByGroupAndStartDtAfter(Group group, LocalDateTime now);
 
+    Optional<Challenge> findByGroupAndStartDtBeforeAndEndDtAfter(Group group, LocalDateTime now, LocalDateTime now1);
+
     Page<Challenge> findAllByGroupAndEndDtBefore(Group group, LocalDateTime now, PageRequest pageRequest);
 
 }
