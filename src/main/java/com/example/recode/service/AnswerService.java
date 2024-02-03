@@ -7,12 +7,12 @@ import com.example.recode.domain.Group;
 import com.example.recode.domain.Problem;
 import com.example.recode.domain.Users;
 import com.example.recode.dto.answer.AnswerAddRequestDto;
+import com.example.recode.dto.answer.AnswerCompareResponseDto;
 import com.example.recode.dto.answer.AnswerListDto;
 import com.example.recode.dto.answer.AnswerResponseDto;
 import com.example.recode.dto.answer.AnswerUpdateRequestDto;
 import com.example.recode.dto.feedback.CommentFeedbackListDto;
 import com.example.recode.dto.feedback.LineFeedbackListDto;
-import com.example.recode.dto.note.NoteListDto;
 import com.example.recode.repository.AnswerRepository;
 import com.example.recode.repository.GroupRepository;
 import com.example.recode.repository.ProblemRepository;
@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,28 +34,34 @@ public class AnswerService {
     private final ProblemRepository problemRepository;
     private final GroupRepository groupRepository;
     private final AlgorithmService algorithmService;
+    private final UserService userService;
+
+    public AnswerCompareResponseDto compareAnswer(Long problemId, Long compareUserId) {
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 문제입니다."));
+
+        Users compareUser = userRepository.findById(compareUserId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 사용자입니다."));
+
+        Users currentUser = userService.findCurrentUser();
+
+        Answer compareAnswer = answerRepository.findByProblemAndUser(problem, compareUser)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이 코드입니다."));
+
+        Answer myAnswer = answerRepository.findByProblemAndUser(problem, currentUser)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이 코드입니다."));
+
+        return AnswerCompareResponseDto.builder()
+                .compareAnswer(toAnswerResponseDto(compareAnswer))
+                .myAnswer(toAnswerResponseDto(myAnswer))
+                .build();
+    }
 
     public AnswerResponseDto getAnswer(Long answerId) {
         Answer answer = answerRepository.findById(answerId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 풀이입니다."));
 
-        List<LineFeedbackListDto> lineFeedbacks = answer.getFeedbacks().stream()
-                .filter(feedback -> feedback.getType().equals(FeedbackType.LINE_FEEDBACK))
-                .map(LineFeedbackListDto::new)
-                .collect(Collectors.toList());
-
-        List<CommentFeedbackListDto> commentFeedbacks = answer.getFeedbacks().stream()
-                .filter(feedback -> feedback.getType().equals(FeedbackType.COMMENT_FEEDBACK))
-                .map(CommentFeedbackListDto::new)
-                .collect(Collectors.toList());
-
-        return AnswerResponseDto.builder()
-                .code(answer.getCode())
-                .comment(answer.getComment())
-                .algorithmList(answer.getAlgorithms().stream().map(Algorithm::getName).collect(Collectors.toList()))
-                .lineFeedbacks(lineFeedbacks)
-                .commentFeedbacks(commentFeedbacks)
-                .build();
+        return toAnswerResponseDto(answer);
     }
 
     public List<AnswerListDto> getAnswerList(Long groupId) {
@@ -107,6 +112,26 @@ public class AnswerService {
         if (dto.getAlgorithmIds() != null) {
             algorithmService.updateAlgorithms(dto.getAlgorithmIds(), answer);
         }
+    }
+
+    private AnswerResponseDto toAnswerResponseDto(Answer answer) {
+        List<LineFeedbackListDto> lineFeedbacks = answer.getFeedbacks().stream()
+                .filter(feedback -> feedback.getType().equals(FeedbackType.LINE_FEEDBACK))
+                .map(LineFeedbackListDto::new)
+                .collect(Collectors.toList());
+
+        List<CommentFeedbackListDto> commentFeedbacks = answer.getFeedbacks().stream()
+                .filter(feedback -> feedback.getType().equals(FeedbackType.COMMENT_FEEDBACK))
+                .map(CommentFeedbackListDto::new)
+                .collect(Collectors.toList());
+
+        return AnswerResponseDto.builder()
+                .code(answer.getCode())
+                .comment(answer.getComment())
+                .algorithmList(answer.getAlgorithms().stream().map(Algorithm::getName).collect(Collectors.toList()))
+                .lineFeedbacks(lineFeedbacks)
+                .commentFeedbacks(commentFeedbacks)
+                .build();
     }
 
 }
