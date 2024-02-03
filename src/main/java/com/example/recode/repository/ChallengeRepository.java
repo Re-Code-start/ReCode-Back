@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
@@ -16,5 +17,7 @@ public interface ChallengeRepository extends JpaRepository<Challenge, Long> {
     Optional<Challenge> findByGroupAndStartDtBeforeAndEndDtAfter(Group group, LocalDateTime now, LocalDateTime now1);
 
     Page<Challenge> findAllByGroupAndEndDtBefore(Group group, LocalDateTime now, PageRequest pageRequest);
+
+    List<Challenge> findByEndDtLessThanEqualAndFeedbackVoteYNTrue(LocalDateTime dateTime);
 
 }

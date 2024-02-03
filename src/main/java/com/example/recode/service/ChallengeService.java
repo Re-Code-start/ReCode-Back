@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -156,6 +157,16 @@ public class ChallengeService {
         }
 
         challenge.closeFeedbackVote();
+    }
+
+    @Scheduled(fixedRate = 3600000) // 1시간마다 실행
+    public void closeFeedbackVoteAfter72Hrs () {
+        LocalDateTime nowMinus72 = LocalDateTime.now().minusHours(72);
+        List<Challenge> challenges = challengeRepository.findByEndDtLessThanEqualAndFeedbackVoteYNTrue(nowMinus72);
+
+        for (Challenge challenge : challenges) {
+            challenge.closeFeedbackVote();
+        }
     }
 
 }
