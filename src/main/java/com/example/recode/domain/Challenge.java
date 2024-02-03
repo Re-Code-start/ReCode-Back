@@ -53,6 +53,14 @@ public class Challenge {
     @JoinColumn(name = "group_id")
     private Group group;
 
+    public void updateStartDt(LocalDateTime startDt) {
+        this.startDt = startDt;
+    }
+
+    public void updateEndDt(LocalDateTime endDt) {
+        this.endDt = endDt;
+    }
+
     public void closeFeedbackVote() {
         this.feedbackVoteYN = false;
     }
