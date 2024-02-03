@@ -2,6 +2,7 @@ package com.example.recode.controller;
 
 import com.example.recode.dto.challenge.ChallengeAddRequestDto;
 import com.example.recode.dto.challenge.ChallengeResponseDto;
+import com.example.recode.dto.challenge.ChallengeUpdateRequestDto;
 import com.example.recode.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,12 @@ public class ChallengeController {
     public ResponseEntity add(@RequestBody ChallengeAddRequestDto dto) {
         challengeService.addChallenge(dto);
         return ResponseEntity.ok("챌린지가 추가되었습니다.");
+    }
+
+    @PatchMapping("/{challengeId}")
+    public ResponseEntity update(@PathVariable Long challengeId, @RequestBody ChallengeUpdateRequestDto dto) {
+        challengeService.updateChallenge(challengeId, dto);
+        return ResponseEntity.ok("챌린지가 수정되었습니다.");
     }
 
     @PatchMapping("/close/{challengeId}")
