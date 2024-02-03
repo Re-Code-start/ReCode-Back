@@ -30,7 +30,7 @@ public class FeedbackAddDto {
         return Feedback.builder()
                 .lineNum(lineNum)
                 .content(content)
-                .type(lineNum != null ? FeedbackType.LINE_BY_LINE_FEEDBACK : FeedbackType.COMMENT_FEEDBACK)
+                .type(lineNum != null ? FeedbackType.LINE_FEEDBACK : FeedbackType.COMMENT_FEEDBACK)
                 .user(user)
                 .answer(answer)
                 .build();
