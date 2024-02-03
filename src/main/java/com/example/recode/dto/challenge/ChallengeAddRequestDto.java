@@ -1,5 +1,7 @@
 package com.example.recode.dto.challenge;
 
+import com.example.recode.domain.Challenge;
+import com.example.recode.domain.Group;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +29,14 @@ public class ChallengeAddRequestDto {
     @NotNull
     private Long groupId;
 
+    public Challenge toEntity(Group group) {
+        return Challenge.builder()
+                .name(name)
+                .startDt(startDt)
+                .endDt(endDt)
+                .participation(0)
+                .feedbackVoteYN(true)
+                .group(group)
+                .build();
+    }
 }

@@ -3,6 +3,7 @@ package com.example.recode.service;
 import com.example.recode.domain.Challenge;
 import com.example.recode.domain.Group;
 import com.example.recode.domain.Users;
+import com.example.recode.dto.challenge.ChallengeAddRequestDto;
 import com.example.recode.dto.challenge.ChallengeResponseDto;
 import com.example.recode.repository.ChallengeRepository;
 import com.example.recode.repository.GroupRepository;
@@ -73,6 +74,38 @@ public class ChallengeService {
         return challenges.stream()
                 .map(ChallengeResponseDto::new)
                 .collect(Collectors.toList());
+    }
+
+    public void addChallenge(ChallengeAddRequestDto dto) {
+        if (getUpcomingChallenge(dto.getGroupId()) != null) {
+            throw new RuntimeException("이미 진행 예정인 챌린지가 있을 경우 새 챌린지 생성이 불가합니다.");
+        }
+
+        ChallengeResponseDto ongoingChallenge = getOngoingChallenge(dto.getGroupId());
+        if (ongoingChallenge != null && dto.getStartDt().isBefore(ongoingChallenge.getEndDt())) {
+            throw new IllegalArgumentException("새 챌린지 시작일자는 진행 중인 챌린지의 종료일자 이후여야 합니다.");
+        }
+
+        if (dto.getStartDt().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("새 챌린지 시작일자는 오늘이거나 오늘 이후여야 합니다.");
+        }
+
+        if (dto.getEndDt().isBefore(dto.getStartDt())) {
+            throw new IllegalArgumentException("새 챌린지 종료일자는 챌린지 시작일자 이후여야 합니다.");
+        }
+
+        Group group = groupRepository.findById(dto.getGroupId())
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 그룹입니다."));
+
+        Users groupLeader = group.getGroupLeader();
+
+        Users user = userService.findCurrentUser();
+
+        if (!user.equals(groupLeader)) {
+            throw new RuntimeException("챌린지 생성은 그룹의 방장만 가능합니다.");
+        }
+
+        challengeRepository.save(dto.toEntity(group));
     }
 
     public void closeFeedbackVote(Long challengeId) {
