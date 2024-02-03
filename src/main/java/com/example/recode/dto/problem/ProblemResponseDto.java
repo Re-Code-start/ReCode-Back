@@ -14,6 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class ProblemResponseDto {
 
+    private Long id;
+
     private String title;
 
     private String link;

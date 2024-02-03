@@ -38,6 +38,7 @@ public class ProblemService {
                 .collect(Collectors.toList());
 
         return ProblemResponseDto.builder()
+                .id(problemId)
                 .title(problem.getTitle())
                 .link(problem.getLink())
                 .category(problem.getCategory())
