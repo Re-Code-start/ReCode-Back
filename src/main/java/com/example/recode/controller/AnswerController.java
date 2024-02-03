@@ -1,6 +1,7 @@
 package com.example.recode.controller;
 
 import com.example.recode.dto.answer.AnswerAddRequestDto;
+import com.example.recode.dto.answer.AnswerCompareResponseDto;
 import com.example.recode.dto.answer.AnswerListDto;
 import com.example.recode.dto.answer.AnswerResponseDto;
 import com.example.recode.dto.answer.AnswerUpdateRequestDto;
@@ -24,6 +25,11 @@ import java.util.List;
 public class AnswerController {
 
     private final AnswerService answerService;
+
+    @GetMapping("/{problemId}/{compareUserId}")
+    public AnswerCompareResponseDto compare(@PathVariable Long problemId, @PathVariable Long compareUserId) {
+        return answerService.compareAnswer(problemId, compareUserId);
+    }
 
     @GetMapping("/{answerId}")
     public AnswerResponseDto get(@PathVariable Long answerId) {
