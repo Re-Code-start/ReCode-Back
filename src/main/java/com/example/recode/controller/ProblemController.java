@@ -1,6 +1,7 @@
 package com.example.recode.controller;
 
 import com.example.recode.dto.problem.ProblemListDto;
+import com.example.recode.dto.problem.ProblemResponseDto;
 import com.example.recode.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,11 @@ import java.util.List;
 public class ProblemController {
 
     private final ProblemService problemService;
+
+    @GetMapping("{problemId}")
+    public ProblemResponseDto get(@PathVariable Long problemId) {
+        return problemService.getProblem(problemId);
+    }
 
     @GetMapping("/list/{challengeId}")
     public List<ProblemListDto> getList(@PathVariable Long challengeId) {
