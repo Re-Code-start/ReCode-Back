@@ -1,5 +1,6 @@
 package com.example.recode.controller;
 
+import com.example.recode.dto.challenge.ChallengeAddRequestDto;
 import com.example.recode.dto.challenge.ChallengeResponseDto;
 import com.example.recode.service.ChallengeService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +36,12 @@ public class ChallengeController {
     @GetMapping("/{groupId}/last")
     public List<ChallengeResponseDto> getLastChallenges(@PathVariable Long groupId, @RequestParam int pageNumber) {
         return challengeService.getLastChallenges(groupId, pageNumber);
+    }
+
+    @PostMapping
+    public ResponseEntity add(@RequestBody ChallengeAddRequestDto dto) {
+        challengeService.addChallenge(dto);
+        return ResponseEntity.ok("챌린지가 추가되었습니다.");
     }
 
     @PatchMapping("/close/{challengeId}")
