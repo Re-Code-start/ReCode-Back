@@ -107,4 +107,15 @@ public class ProblemService {
         problem.updateInfo(dto);
     }
 
+    public void deleteProblem(Long problemId) {
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 문제입니다."));
+
+        // 진행 예정인 챌린지만 문제 삭제 가능
+        if (!problem.getChallenge().isUpcoming()) {
+            throw new IllegalArgumentException("진행 예정인 챌린지만 문제 삭제가 가능합니다.");
+        }
+
+        problemRepository.delete(problem);
+    }
 }
