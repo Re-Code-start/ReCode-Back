@@ -3,10 +3,12 @@ package com.example.recode.controller;
 import com.example.recode.dto.problem.ProblemAddRequestDto;
 import com.example.recode.dto.problem.ProblemListDto;
 import com.example.recode.dto.problem.ProblemResponseDto;
+import com.example.recode.dto.problem.ProblemUpdateRequestDto;
 import com.example.recode.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +38,12 @@ public class ProblemController {
     public ResponseEntity add(@RequestBody ProblemAddRequestDto dto) {
         problemService.addProblem(dto);
         return ResponseEntity.ok("문제 추가가 완료되었습니다.");
+    }
+
+    @PatchMapping("/{problemId}")
+    public ResponseEntity update(@PathVariable Long problemId, @RequestBody ProblemUpdateRequestDto dto) {
+        problemService.updateProblem(problemId, dto);
+        return ResponseEntity.ok("문제 수정이 완료되었습니다.");
     }
 
 }
