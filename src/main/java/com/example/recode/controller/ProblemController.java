@@ -7,6 +7,7 @@ import com.example.recode.dto.problem.ProblemUpdateRequestDto;
 import com.example.recode.service.ProblemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,12 @@ public class ProblemController {
     public ResponseEntity update(@PathVariable Long problemId, @RequestBody ProblemUpdateRequestDto dto) {
         problemService.updateProblem(problemId, dto);
         return ResponseEntity.ok("문제 수정이 완료되었습니다.");
+    }
+
+    @DeleteMapping("/{problemId}")
+    public ResponseEntity delete(@PathVariable Long problemId) {
+        problemService.deleteProblem(problemId);
+        return ResponseEntity.ok("문제 삭제가 완료되었습니다.");
     }
 
 }
