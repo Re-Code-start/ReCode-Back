@@ -64,4 +64,10 @@ public class Challenge {
     public void closeFeedbackVote() {
         this.feedbackVoteYN = false;
     }
+
+    public boolean isUpcoming() {
+        LocalDateTime now = LocalDateTime.now();
+        return startDt.isAfter(now);
+    }
+
 }
