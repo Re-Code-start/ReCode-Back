@@ -1,5 +1,6 @@
 package com.example.recode.domain;
 
+import com.example.recode.dto.problem.ProblemUpdateRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,5 +57,12 @@ public class Problem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
+
+    public void updateInfo(ProblemUpdateRequestDto dto) {
+        if (dto.getTitle() != null)  this.title = dto.getTitle();
+        if (dto.getLink() != null)  this.link = dto.getLink();
+        if (dto.getCategory() != null)  this.category = dto.getCategory();
+        if (dto.getDifficulty() != null)  this.difficulty = dto.getDifficulty();
+    }
 
 }

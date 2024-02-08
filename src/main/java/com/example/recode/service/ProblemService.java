@@ -7,6 +7,7 @@ import com.example.recode.domain.Users;
 import com.example.recode.dto.problem.ProblemAddRequestDto;
 import com.example.recode.dto.problem.ProblemListDto;
 import com.example.recode.dto.problem.ProblemResponseDto;
+import com.example.recode.dto.problem.ProblemUpdateRequestDto;
 import com.example.recode.dto.problem.SolvedMemberListDto;
 import com.example.recode.repository.ChallengeRepository;
 import com.example.recode.repository.ProblemRepository;
@@ -92,6 +93,18 @@ public class ProblemService {
         }
 
         problemRepository.save(dto.toEntity(challenge, user));
+    }
+
+    public void updateProblem(Long problemId, ProblemUpdateRequestDto dto) {
+        Problem problem = problemRepository.findById(problemId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 문제입니다."));
+
+        // 진행 예정인 챌린지만 문제 추가 가능
+        if (!problem.getChallenge().isUpcoming()) {
+            throw new IllegalArgumentException("진행 예정인 챌린지만 문제 수정이 가능합니다.");
+        }
+
+        problem.updateInfo(dto);
     }
 
 }
