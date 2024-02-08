@@ -99,7 +99,7 @@ public class ProblemService {
         Problem problem = problemRepository.findById(problemId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 문제입니다."));
 
-        // 진행 예정인 챌린지만 문제 추가 가능
+        // 진행 예정인 챌린지만 문제 수정 가능
         if (!problem.getChallenge().isUpcoming()) {
             throw new IllegalArgumentException("진행 예정인 챌린지만 문제 수정이 가능합니다.");
         }
