@@ -120,7 +120,7 @@ public class ChallengeService {
 
         Long groupId = challenge.getGroup().getId();
 
-        if (!challengeId.equals(getUpcomingChallenge(groupId).getId())) {
+        if (!challenge.isUpcoming()) {
             throw new IllegalArgumentException("진행 예정인 챌린지만 수정 가능합니다.");
         }
 
